@@ -32,13 +32,17 @@ export default {
 };
 */
 import nodeResolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 
 export default {
-    entry: 'benchmark/simple.js',
+    entry: 'benchmark/tests/interpretation.js',
     dest: 'benchmark/out.js',
     plugins: [
         nodeResolve({
-            jsnext: true
-        })
-    ]
+            jsnext: true,
+            main: true
+        }),
+        commonjs()
+    ],
+    format: 'iife'
 };

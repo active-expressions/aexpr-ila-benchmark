@@ -1,3 +1,24 @@
+function standardDeviation(values){
+  var avg = average(values);
+
+  var squareDiffs = values.map(function(value){
+    var diff = value - avg;
+    return diff * diff;
+  });
+
+  var avgSquareDiff = average(squareDiffs);
+
+  return Math.sqrt(avgSquareDiff);
+}
+
+function average(data){
+  var sum = data.reduce(function(sum, value){
+    return sum + value;
+  }, 0);
+
+  return sum / data.length;
+}
+
 export default function perfTest(runner, runs) {
   return function () {
     if (typeof runs == "undefined") {

@@ -7,10 +7,13 @@
 <body>
   <div id="mocha"></div>
   <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
   <script>
     mocha.setup('bdd');
     mocha.timeout(120000);
     mocha.slow(120000);
+
+    expect = chai.expect;
   </script>
   <script src="./out.js"></script>
   <script>

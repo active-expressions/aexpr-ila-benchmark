@@ -4,7 +4,8 @@
   "description": "Benchmarking the 3 implementation strategies of active-expressions",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "bench": "rollup -c rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -22,9 +23,13 @@
   "dependencies": {
     "active-expressions": "^1.5.0",
     "babel-cli": "^6.11.4",
+    "chai": "^3.5.0",
     "mocha": "^3.0.2",
+    "random-seed": "^0.3.0",
     "rollup": "^0.34.8",
+    "rollup-plugin-commonjs": "^3.3.1",
     "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-watch": "^2.5.0",
     "stack-es2015-modules": "^1.1.0"
   }
 }
