@@ -25,8 +25,10 @@ describe('Interpretation Benchmarks', function() {
     });
 
     it("Changing Rectangles", perfTest(function () {
+      var count = 100;
+
       var rects = [];
-      for(let i = 0; i < 10; i++) {
+      for(let i = 0; i < count; i++) {
         rects.push({
           width: i,
           height: 10,
@@ -34,11 +36,11 @@ describe('Interpretation Benchmarks', function() {
         });
       }
 
-      for(let i = 0; i < 10; i++) {
+      for(let i = 0; i < count; i++) {
         //aexprInterpretation(function() { return rects[i].area() }, {rects, i});
       }
 
-      for(let i = 0; i < 10; i++) {
+      for(let i = 0; i < count; i++) {
         rects[i].width += 1;
         expect(rects[i].area()).to.be.greaterThan(0);
       }

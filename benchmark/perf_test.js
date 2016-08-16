@@ -19,17 +19,37 @@ function average(data){
   return sum / data.length;
 }
 
-export default function perfTest(runner, runs) {
+export default function perfTest(runner) {
   return function () {
-    if (typeof runs == "undefined") {
-      runs = 100;
-    }
-    var start = performance.now();
-    for(var i = 0; i < runs; i++) {
+    const maxRuns = 100,
+        slidingWindowSize = 30,
+        allowPercentagedDeviation = 4;
+
+    let results = [];
+
+    for(var i = 0; i < maxRuns; i++) {
+      var start = performance.now();
+
       runner.call(this);
+
+      var duration = (performance.now() - start);
+      results.push(duration);
+
+      // if(results.length >= slidingWindowSize) {
+      //   let time = average(results.slice(-slidingWindowSize));
+      //   let percentagedStandardDeviation = 100 * standardDeviation(results.slice(-slidingWindowSize)) / time;
+      //   if(percentagedStandardDeviation <= allowPercentagedDeviation) {
+      //     break;
+      //   }
+      // }
     }
-    var time = (performance.now() - start) / runs;
-    this._runnable.title += ": " + time.toFixed(3) + "ms";
+
+    let lastMeasurements = results.slice(-slidingWindowSize),
+        time = average(lastMeasurements),
+        deviation = 100 * standardDeviation(lastMeasurements) / time;
+
+    this._runnable.title += ": " + time.toFixed(3) + "ms, +/- " + deviation.toFixed(1) + "%";
+
     return time;
   };
 };
