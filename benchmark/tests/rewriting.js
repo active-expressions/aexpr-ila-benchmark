@@ -1,6 +1,4 @@
 import perfTest from '../perf_test.js';
-
-import { aexprInterpretation } from 'active-expressions';
 import rand from 'random-seed';
 
 console.log(rand);
