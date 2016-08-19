@@ -6,6 +6,10 @@
   "scripts": {
     "test": "npm test",
     "build:bench": "rollup -c rollup.config.js",
+    "build-baseline": "rollup -c rollup.config.baseline.js",
+    "build-ticking": "rollup -c rollup.config.ticking.js",
+    "build-rewrite": "rollup -c rollup.config.rewrite1.js && babel benchmark/temp/rewriting_aexpr.js --out-file benchmark/temp/rewriting_babel_out.js && rollup -c rollup.config.rewrite2.js",
+    "build-interpretation": "rollup -c rollup.config.interpretation.js",
     "watch": "chokidar benchmark/tests/**/* -c \"rollup -c rollup.config.js\""
   },
   "repository": {
