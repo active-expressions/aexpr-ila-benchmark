@@ -9,7 +9,7 @@
     "build-baseline": "rollup -c rollup.config.baseline.js",
     "build-ticking": "rollup -c rollup.config.ticking.js",
     "build-rewrite": "rollup -c rollup.config.rewrite1.js && cd benchmark/temp && babel rewriting_aexpr.js --out-file rewriting_babel_out.js && cd ../.. && rollup -c rollup.config.rewrite2.js",
-    "build-interpretation": "rollup -c rollup.config.interpretation.js",
+    "build-interpretation": "rollup -c rollup.config.interpretation.js && cd benchmark/temp/interpretation && babel interpretation_babel_in.js --out-file interpretation_babel_out.js && cd ../../.. && rollup -c rollup.config.interpretation2.js",
     "watch": "chokidar benchmark/tests/**/* -c \"rollup -c rollup.config.js\""
   },
   "repository": {
