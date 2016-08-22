@@ -24,6 +24,7 @@ describe('Baseline Benchmarks', function() {
     }));
   });
 
+  // TODO: remove duplicate with rewriting
   describe("Run", function() {
 
     let quickSortRand = rand.create('quickSort'),

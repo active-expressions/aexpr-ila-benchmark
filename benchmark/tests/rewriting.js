@@ -25,17 +25,22 @@ describe('Rewriting Benchmarks', function() {
     }));
   });
 
+  // TODO: remove duplicate with baseline
   describe("Run", function() {
 
-    let quickSortRand = rand.create('quickSort');
+    let quickSortRand = rand.create('quickSort'),
+        items;
 
-    it("Quicksort", perfTest(function () {
-      let items = [];
-      for(let i = 0; i < 1000; i++) {
-        items.push(quickSortRand.random());
+    it("Quicksort", perfTest({
+      setupRun() {
+        items = [];
+        for(let i = 0; i < 1000; i++) {
+          items.push(quickSortRand.random());
+        }
+      },
+      run() {
+        quickSort(items);
       }
-
-      quickSort(items);
     }));
   });
 });
