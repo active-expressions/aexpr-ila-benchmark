@@ -2,6 +2,8 @@ import perfTest from '../perf_test.js';
 import rand from 'random-seed';
 import { createRectangle } from './fixture.js';
 
+import quickSort from './deps/quicksort.js';
+
 describe('Baseline Benchmarks', function() {
   this.timeout("2000s");
 
@@ -19,6 +21,20 @@ describe('Baseline Benchmarks', function() {
         rect.height = rect.width / targetAspectRatio;
         expect(rect.aspectRatio()).to.equal(targetAspectRatio);
       }
+    }));
+  });
+
+  describe("Run", function() {
+
+    let quickSortRand = rand.create('quickSort');
+
+    it("Quicksort", perfTest(function () {
+      let items = [];
+      for(let i = 0; i < 1000; i++) {
+        items.push(quickSortRand.random());
+      }
+
+      quickSort(items);
     }));
   });
 });
