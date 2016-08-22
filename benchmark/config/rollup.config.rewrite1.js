@@ -2,21 +2,14 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import * as path from 'path';
 
+var skippedCodebase = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (num) {
+    return path.resolve('benchmark/tests/deps/toSkip' + num + '.js');
+});
+
 export default {
     entry: 'benchmark/tests/rewriting.js',
-    dest: 'benchmark/temp/rewriting/rewriting_aexpr.js',
-    external: [
-        path.resolve('benchmark/tests/deps/toSkip0.js'),
-        path.resolve('benchmark/tests/deps/toSkip1.js'),
-        path.resolve('benchmark/tests/deps/toSkip2.js'),
-        path.resolve('benchmark/tests/deps/toSkip3.js'),
-        path.resolve('benchmark/tests/deps/toSkip4.js'),
-        path.resolve('benchmark/tests/deps/toSkip5.js'),
-        path.resolve('benchmark/tests/deps/toSkip6.js'),
-        path.resolve('benchmark/tests/deps/toSkip7.js'),
-        path.resolve('benchmark/tests/deps/toSkip8.js'),
-        path.resolve('benchmark/tests/deps/toSkip9.js')
-    ],
+    dest: 'benchmark/temp/rewriting/rewriting_babel_in.js',
+    external: skippedCodebase,
     plugins: [
         nodeResolve({
             jsnext: true,
