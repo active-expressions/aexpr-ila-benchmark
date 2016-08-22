@@ -30,12 +30,13 @@ describe('Baseline Benchmarks', function() {
         items;
 
     it("Quicksort", perfTest({
-      run() {
+      setupRun() {
         items = [];
         for(let i = 0; i < 1000; i++) {
           items.push(quickSortRand.random());
         }
-
+      },
+      run() {
         quickSort(items);
       }
     }));

@@ -19,6 +19,18 @@ function average(data){
   return sum / data.length;
 }
 
+function performSingleRun(runner) {
+  runner.setupRun && runner.setupRun();
+
+  var start = performance.now();
+  runner.run.call(this);
+  var duration = (performance.now() - start);
+
+  runner.teardownRun && runner.teardownRun();
+
+  return duration;
+}
+
 export default function perfTest(runner) {
   if(runner instanceof Function) {
     runner = {
@@ -34,12 +46,7 @@ export default function perfTest(runner) {
     let results = [];
 
     for(var i = 0; i < maxRuns; i++) {
-      var start = performance.now();
-
-      runner.run.call(this);
-
-      var duration = (performance.now() - start);
-      results.push(duration);
+      results.push(performSingleRun(runner));
 
       // if(results.length >= slidingWindowSize) {
       //   let time = average(results.slice(-slidingWindowSize));
