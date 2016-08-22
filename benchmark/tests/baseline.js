@@ -26,15 +26,18 @@ describe('Baseline Benchmarks', function() {
 
   describe("Run", function() {
 
-    let quickSortRand = rand.create('quickSort');
+    let quickSortRand = rand.create('quickSort'),
+        items;
 
-    it("Quicksort", perfTest(function () {
-      let items = [];
-      for(let i = 0; i < 1000; i++) {
-        items.push(quickSortRand.random());
+    it("Quicksort", perfTest({
+      run() {
+        items = [];
+        for(let i = 0; i < 1000; i++) {
+          items.push(quickSortRand.random());
+        }
+
+        quickSort(items);
       }
-
-      quickSort(items);
     }));
   });
 });

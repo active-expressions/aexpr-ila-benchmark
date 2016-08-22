@@ -20,6 +20,12 @@ function average(data){
 }
 
 export default function perfTest(runner) {
+  if(runner instanceof Function) {
+    runner = {
+      run: runner
+    };
+  }
+
   return function () {
     const maxRuns = 100,
         slidingWindowSize = 30,
@@ -30,7 +36,7 @@ export default function perfTest(runner) {
     for(var i = 0; i < maxRuns; i++) {
       var start = performance.now();
 
-      runner.call(this);
+      runner.run.call(this);
 
       var duration = (performance.now() - start);
       results.push(duration);
