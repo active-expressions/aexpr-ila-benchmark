@@ -5,12 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "build-all": "npm run build-baseline && npm run build-ticking && npm run build-rewrite && npm run build-interpretation",
+    "build-all": "npm run build-baseline && npm run build-ticking && npm run build-rewriting && npm run build-interpretation",
     "build-baseline": "rollup -c benchmark/config/rollup.config.baseline.js",
     "build-ticking": "rollup -c benchmark/config/rollup.config.ticking.js",
-    "build-rewrite": "rollup -c benchmark/config/rollup.config.rewrite1.js && cd benchmark/temp/rewriting && babel rewriting_aexpr.js --out-file rewriting_babel_out.js && cd ../../.. && rollup -c benchmark/config/rollup.config.rewrite2.js",
+    "build-rewriting": "rollup -c benchmark/config/rollup.config.rewrite1.js && cd benchmark/temp/rewriting && babel rewriting_aexpr.js --out-file rewriting_babel_out.js && cd ../../.. && rollup -c benchmark/config/rollup.config.rewrite2.js",
     "build-interpretation": "rollup -c benchmark/config/rollup.config.interpretation.js && cd benchmark/temp/interpretation && babel interpretation_babel_in.js --out-file interpretation_babel_out.js && cd ../../.. && rollup -c benchmark/config/rollup.config.interpretation2.js",
-    "watch": "chokidar benchmark/tests/**/* -c \"rollup -c rollup.config.js\""
+    "watch": "chokidar benchmark/tests/**/* -c \"rollup -c rollup.config.js\"",
+    "watch-baseline": "chokidar benchmark/tests/baseline* -c \"npm run build-baseline\"",
+    "watch-ticking": "chokidar benchmark/tests/ticking* -c \"npm run build-ticking\"",
+    "watch-rewriting": "chokidar benchmark/tests/rewriting* -c \"npm run build-rewriting\"",
+    "watch-interpretation": "chokidar benchmark/tests/interpretation* -c \"npm run build-interpretation\""
   },
   "repository": {
     "type": "git",
