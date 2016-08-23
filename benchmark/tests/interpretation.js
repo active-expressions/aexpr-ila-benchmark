@@ -37,7 +37,6 @@ describe('Interpretation Benchmarks', function() {
             let rect = createRectangle(20, 10);
 
             if(j < i) {
-              console.log(`wrap rect (${j})`);
               aexprInterpretation(() => rect.aspectRatio(), {rect});
             }
 
