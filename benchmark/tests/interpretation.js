@@ -25,7 +25,8 @@ describe('Interpretation Benchmarks', function() {
     }));
   });
 
-  describe("Run", function() {
+  describe("Run2", function() {
+    describe("Run", function() {
 
     let rects;
 
@@ -54,5 +55,6 @@ describe('Interpretation Benchmarks', function() {
         }
       }));
     }
+    });
   });
 });
