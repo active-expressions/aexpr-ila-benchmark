@@ -3,7 +3,16 @@ var path = require('path');
 var fs = require('fs');
 var builder = require('xmlbuilder');
 
+// schema
+// browser,base suite,sub suite,test name, run number,runtime,status(passed, fail(ed), skipped, failed)
+
+function getLINE() {
+
+}
+
 var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, helper, formatError) {
+  var CSVs;
+
   var outputFile = config.htmlReporter.outputFile;
   var pageTitle = config.htmlReporter.pageTitle || 'Unit Test Results';
   var subPageTitle = config.htmlReporter.subPageTitle || false;
@@ -56,6 +65,7 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
   };
 
   var createHtmlResults = function(browser) {
+    console.log('CREATE_HTML_RESULTS', browser.fullName, browser.id, browser.name);
     var suite;
     var header;
     var overview;
@@ -87,6 +97,7 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
   };
 
   var initializeHtmlForBrowser = function(browser) {
+    console.log('INITIALIZE_HTML_FOR_BROWSER', browser.fullName, browser.id, browser.name);
     if (!htmlCreated) {
       html = builder.create('html', null, 'html', { headless: true });
 
@@ -100,26 +111,37 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
   };
 
   this.adapters = [function(msg) {
+    console.log('ADAPTER', msg);
+    console.log('ADAPTER', msg);
+    console.log('ADAPTER', msg);
+    console.log('ADAPTER', msg);
     allMessages.push(msg);
   }];
 
   this.onRunStart = function(browsers) {
+    CSVs = {};
+    console.log('ON_RUN_START', browsers);
     suites = {};
     browsers.forEach(initializeHtmlForBrowser);
   };
 
   this.onBrowserStart = function(browser) {
+    CSVs[browser.id] = [['first', 'second']];
+    console.log('ON_BROWSER_START', browser);
     initializeHtmlForBrowser(browser);
     createHtmlResults(browser);
   };
 
   this.onBrowserError = function(browser, error) {
+    console.error('SOMETHING TERRIBLE HAPPENED IN: ' + browser.name, error);
+    console.log('ON_BROWSER_ERROR', browser);
     initializeHtmlForBrowser(browser);
     createHtmlResults(browser);
     allErrors.push(formatError(error));
   };
 
   this.onBrowserComplete = function(browser) {
+    console.log('ON_BROWSER_COMPLETE', browser);
     var suite = suites[browser.id];
     var result = browser.lastResult;
 
@@ -153,6 +175,8 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
   };
 
   this.onRunComplete = function(browsers) {
+    console.log('ON_RUN_COMPLETE', browsers);
+    console.log('ON_RUN_COMPLETE2', browsers.getResults());
     var htmlToOutput = html;
 
     if (htmlToOutput) {
@@ -163,7 +187,7 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
       helper.normalizeWinPath(outputFile);
 
       helper.mkdirIfNotExists(path.dirname(outputFile), function() {
-        fs.writeFile(outputFile, htmlToOutput.end({pretty: true}), function(err) {
+        fs.writeFile(outputFile, JSON.stringify(CSVs)/*.end({pretty: true})*/, function(err) {
           if (err) {
             log.warn('Cannot write HTML report\n\t' + err.message);
           } else {
@@ -186,6 +210,9 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
   };
 
   this.specSuccess = this.specSkipped = this.specFailure = function(browser, result) {
+    var csv = CSVs[browser.id];
+    csv.push([1,2]);
+
     var currentSuite = result.suite;
     var suiteName = currentSuite.concat();
     var currentSuiteName = currentSuite[0];
