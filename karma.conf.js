@@ -3,15 +3,11 @@ var path = require('path');
 var fs = require('fs');
 var builder = require('xmlbuilder');
 
-function getLINE() {
-
-}
-
-var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, helper, formatError) {
+var JSONReporter = function(baseReporterDecorator, config, emitter, logger, helper, formatError) {
   var json;
 
-    var outputFile = config.htmlReporter.outputFile;
-  var log = logger.create('reporter.html');
+    var outputFile = config.jsonReporter.outputFile;
+  var log = logger.create('reporter.json');
 
   var pendingFileWritings = 0;
   var fileWritingFinished = function() {};
@@ -60,11 +56,9 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
   };
 
   this.onRunComplete = function(browsers) {
-    console.log('ON_RUN_COMPLETE', browsers);
-    console.log('ON_RUN_COMPLETE2', browsers.getResults());
-    var htmlToOutput = json;
+    var jsonToOutput = json;
 
-    if (htmlToOutput) {
+    if (jsonToOutput) {
       pendingFileWritings++;
 
       config.basePath = path.resolve(config.basePath || '.');
@@ -72,7 +66,7 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
       helper.normalizeWinPath(outputFile);
 
       helper.mkdirIfNotExists(path.dirname(outputFile), function() {
-        fs.writeFile(outputFile, JSON.stringify(htmlToOutput)/*.end({pretty: true})*/, function(err) {
+        fs.writeFile(outputFile, JSON.stringify(jsonToOutput), function(err) {
           if (err) {
             log.warn('Cannot write JSON report\n\t' + err.message);
           } else {
@@ -85,13 +79,8 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
         });
       });
     } else {
-      log.error('HTML report was not created\n\t');
+      log.error('JSON report was not created\n\t');
     }
-
-    //html = null;
-    //allMessages.length = 0;
-    //allErrors.length = 0;
-    //htmlCreated = false;
   };
 
   this.specSuccess = this.specSkipped = this.specFailure = function(browser, result) {
@@ -104,7 +93,7 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
     });
   };
 
-  // wait for writing all the html files, before exiting
+  // wait for writing all the json files, before exiting
   this.onExit = function (done) {
     if (pendingFileWritings) {
       fileWritingFinished = done;
@@ -114,7 +103,7 @@ var HTMLReporter = function(baseReporterDecorator, config, emitter, logger, help
   };
 };
 
-HTMLReporter.prototype._repeat = function(n, str) {
+JSONReporter.prototype._repeat = function(n, str) {
   var res = [];
   var i;
   for (i = 0; i < n; ++i) {
@@ -123,7 +112,7 @@ HTMLReporter.prototype._repeat = function(n, str) {
   return res.join('');
 };
 
-HTMLReporter.$inject = ['baseReporterDecorator', 'config', 'emitter', 'logger', 'helper', 'formatError'];
+JSONReporter.$inject = ['baseReporterDecorator', 'config', 'emitter', 'logger', 'helper', 'formatError'];
 
 
 // =============================================================================
@@ -165,10 +154,10 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha', 'html'],
+    reporters: ['mocha', 'json'],
 
-    htmlReporter: {
-      outputFile: 'foo/foo.json'
+    jsonReporter: {
+      outputFile: 'results/result.json'
     },
 
 
@@ -227,7 +216,7 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-mocha-reporter',
       'karma-chrome-launcher',
-      {'reporter:html': ['type', HTMLReporter]}
+      {'reporter:json': ['type', JSONReporter]}
     ]
   });
 
