@@ -61,8 +61,12 @@ export default function perfTest(runner) {
         time = average(lastMeasurements),
         deviation = 100 * standardDeviation(lastMeasurements) / time;
 
-    this._runnable.title += ": " + time.toFixed(3) + "ms, +/- " + deviation.toFixed(1) + "%, results:" +
-        JSON.stringify(results);
+    this._runnable.title = JSON.stringify({
+        name: this._runnable.title,
+        average: time.toFixed(3),
+        standardDeviation: deviation.toFixed(1),
+        results: results
+    });
 
     return time;
   };
