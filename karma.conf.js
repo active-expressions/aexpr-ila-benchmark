@@ -182,14 +182,14 @@ module.exports = function(config) {
     browsers: ['Chrome'],
 
     customLaunchers: {
-      Chrome_LOCAL: {
+      Chrome_Local: {
         base: 'Chrome',
         flags: [
           '--disable-hang-monitor'
         ]
       },
       Chrome_Travis_CI: {
-        base: 'Chrome',
+        base: 'ChromeCanary',
         flags: [
           '--no-sandbox',
           '--disable-hang-monitor'
@@ -220,5 +220,5 @@ module.exports = function(config) {
     ]
   });
 
-  config.browsers = [process.env.TRAVIS ? 'Chrome_Travis_CI' : 'Chrome_LOCAL'];
+  config.browsers = [process.env.TRAVIS ? 'Chrome_Travis_CI' : 'Chrome_Local'];
 };
