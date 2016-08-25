@@ -17,7 +17,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
   do
     cp "$file" "../gh-pages/benchmarks/latest.json"
     cp "$file" "../gh-pages/benchmarks/history/$file"
-    echo "$file">>../gh-pages/benchmarks/results.json
+    echo "$file">>../gh-pages/benchmarks/results
   done
 
   cd ..

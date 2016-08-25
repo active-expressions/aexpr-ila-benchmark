@@ -4,9 +4,8 @@
   "description": "Benchmarking the 3 implementation strategies of active-expressions",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build-minimal && karma start --single-run",
+    "test": "npm run build-all && karma start --single-run",
     "build-all": "npm run build-baseline && npm run build-ticking && npm run build-rewriting && npm run build-interpretation",
-    "build-minimal": "npm run build-baseline && npm run build-ticking",
     "build-baseline": "rollup -c benchmark/config/rollup.config.baseline.js",
     "build-ticking": "rollup -c benchmark/config/rollup.config.ticking.js",
     "build-rewriting": "rollup -c benchmark/config/rollup.config.rewrite1.js && cd benchmark/temp/rewriting && babel rewriting_babel_in.js --out-file rewriting_babel_out.js && cd ../../.. && rollup -c benchmark/config/rollup.config.rewrite2.js",
