@@ -16,4 +16,4 @@ before_script:
     - sh -e /etc/init.d/xvfb start
 
 after_success:
-    - deploy-to-gh-pages.sh
+    - bash deploy-to-gh-pages.sh
