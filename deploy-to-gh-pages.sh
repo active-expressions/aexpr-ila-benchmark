@@ -17,6 +17,11 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
     echo $f
     cp $f latest.json
   done
+  for file in *.json
+  do
+    NEWNAME="${file/%.json/.on}"
+    mv -- "$file" "$NEWNAME"
+  done
   ls
 
   cd ..
