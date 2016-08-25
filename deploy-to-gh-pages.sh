@@ -12,25 +12,16 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/active-expressions/active-expressions-benchmark-results gh-pages > /dev/null
 
   cd results-to-push
-  for file in *
-  do
-    echo $f
-    cp $f latest.json
-  done
+
   for file in *.json
   do
-    cp "$file" "../gh-pages/latest.json"
-    cp "$file" "../gh-pages/$file"
-    echo "$file">>../gh-pages/results.json
-    NEWNAME="${file/%.json/.on}"
-    mv -- "$file" "$NEWNAME"
+    cp "$file" "../gh-pages/benchmark/latest.json"
+    cp "$file" "../gh-pages/benchmark/$file"
+    echo "$file">>../gh-pages/benchmark/results.json
   done
 
   cd ..
   cd gh-pages
-cd results
-ls
-cd ..
   git add -f .
   git commit -m "Latest benchmark results on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
