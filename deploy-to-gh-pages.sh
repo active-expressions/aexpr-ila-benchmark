@@ -9,7 +9,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
   cd $HOME
   git config --global user.email "stefan.ramson@hpi.de"
   git config --global user.name "onsetsu"
-  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/active-expressions/active-expressions-benchmark gh-pages > /dev/null
+  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/active-expressions/active-expressions-benchmark-results gh-pages > /dev/null
 
   cd gh-pages
   git rm -rf ./results
