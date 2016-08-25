@@ -15,9 +15,9 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
 
   for file in *.json
   do
-    cp "$file" "../gh-pages/benchmark/latest.json"
-    cp "$file" "../gh-pages/benchmark/$file"
-    echo "$file">>../gh-pages/benchmark/results.json
+    cp "$file" "../gh-pages/benchmarks/latest.json"
+    cp "$file" "../gh-pages/benchmarks/history/$file"
+    echo "$file">>../gh-pages/benchmarks/results.json
   done
 
   cd ..
