@@ -7,8 +7,8 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
   cp -R results $HOME/results-to-push
 
   cd $HOME
-  git config --global user.email "travis@travis-ci.org"
-  git config --global user.name "travis-ci"
+  git config --global user.email "stefan.ramson@hpi.de"
+  git config --global user.name "onsetsu"
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/active-expressions/active-expressions-benchmark gh-pages > /dev/null
 
   cd gh-pages
