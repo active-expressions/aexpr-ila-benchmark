@@ -64,7 +64,7 @@ var JSONReporter = function(baseReporterDecorator, config, emitter, logger, help
       config.basePath = path.resolve(config.basePath || '.');
       outputFile = basePathResolve(outputFile);
       helper.normalizeWinPath(outputFile);
-
+console.log(outputFile);
       helper.mkdirIfNotExists(path.dirname(outputFile), function() {
         fs.writeFile(outputFile, JSON.stringify(jsonToOutput), function(err) {
           if (err) {
@@ -119,6 +119,12 @@ JSONReporter.$inject = ['baseReporterDecorator', 'config', 'emitter', 'logger', 
 // =============================================================================
 // =============================================================================
 
+var now = new Date();
+var nowString = now.toDateString() + ' ' + now.toTimeString().slice(0,8);
+nowString = nowString
+    .replace(/:/g, '.')
+    .replace(/ /g, '_');
+
 // Karma configuration
 // Generated on Tue Aug 23 2016 14:57:05 GMT+0200 (W. Europe Daylight Time)
 
@@ -157,7 +163,7 @@ module.exports = function(config) {
     reporters: ['mocha', 'json'],
 
     jsonReporter: {
-      outputFile: 'results/result.json'
+      outputFile: 'results/' + nowString + '.json'
     },
 
 
@@ -179,7 +185,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['Chrome_Local'],
 
     customLaunchers: {
       Chrome_Local: {

@@ -11,8 +11,16 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
   git config --global user.name "onsetsu"
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/active-expressions/active-expressions-benchmark-results gh-pages > /dev/null
 
+  cd results-to-push
+  for file in *
+  do
+    echo $f
+    cp $f latest.json
+  done
+  ls
+
+  cd ..
   cd gh-pages
-  git rm -rf ./results
   cp -Rf $HOME/results-to-push ./results
   git add -f .
   git commit -m "Latest benchmark results on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
