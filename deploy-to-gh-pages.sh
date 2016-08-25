@@ -19,14 +19,18 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; th
   done
   for file in *.json
   do
+    cp "$file" "../gh-pages/latest.json"
+    cp "$file" "../gh-pages/$file"
+    echo "$file">>../gh-pages/results.json
     NEWNAME="${file/%.json/.on}"
     mv -- "$file" "$NEWNAME"
   done
-  ls
 
   cd ..
   cd gh-pages
-  cp -Rf $HOME/results-to-push ./results
+cd results
+ls
+cd ..
   git add -f .
   git commit -m "Latest benchmark results on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
