@@ -26,26 +26,27 @@ import plainCalc8 from './deps/toSkip8.js';
 import plainCalc9 from './deps/toSkip9.js';
 import plainCalc0 from './deps/toSkip0.js';
 
-describe('Rewriting Benchmarks', function() {
+describe("Maintain Aspect Ratio", function() {
   this.timeout("2000s");
 
-  describe("Run", function() {
+  let aspectRatioCount = 1000;
+  const targetAspectRatio = 2;
+  let aspectRatioRand = rand.create('aspectRatio');
 
-    let aspectRatioCount = 1000;
-    const targetAspectRatio = 2;
-    let aspectRatioRand = rand.create('aspectRatio');
+  it("Rewriting", perfTest(function () {
+    let rect = createRectangle(20, 10);
+    aexpr(() => rect.aspectRatio())
+        .onChange(ratio => rect.height = rect.width / targetAspectRatio);
 
-    it("Maintain Aspect Ratio", perfTest(function () {
-      let rect = createRectangle(20, 10);
-      aexpr(() => rect.aspectRatio())
-          .onChange(ratio => rect.height = rect.width / targetAspectRatio);
+    for(let i = 0; i < aspectRatioCount; i++) {
+      rect.width = aspectRatioRand.random();
+      expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+    }
+  }));
+});
 
-      for(let i = 0; i < aspectRatioCount; i++) {
-        rect.width = aspectRatioRand.random();
-        expect(rect.aspectRatio()).to.equal(targetAspectRatio);
-      }
-    }));
-  });
+describe('Rewriting Benchmarks', function() {
+  this.timeout("2000s");
 
   // TODO: remove duplicate with baseline
   describe("Run", function() {
