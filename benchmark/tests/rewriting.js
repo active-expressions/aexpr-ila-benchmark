@@ -45,60 +45,58 @@ describe("Maintain Aspect Ratio", function() {
   }));
 });
 
-describe('Rewriting Benchmarks', function() {
+// TODO: remove duplicate with baseline
+describe("Rewriting Transformation Impact", function() {
   this.timeout("2000s");
 
-  // TODO: remove duplicate with baseline
-  describe("Run", function() {
+  let quickSortRand = rand.create('quickSort'),
+      items;
 
-    let quickSortRand = rand.create('quickSort'),
-        items;
+  it("Rewriting", perfTest({
+    setupRun() {
+      items = [];
+      for(let i = 0; i < 1000; i++) {
+        items.push(quickSortRand.random());
+      }
+    },
+    run() {
+      quickSort(items);
+    }
+  }));
+});
 
-    it("Quicksort", perfTest({
+describe("Partially Rewritten", function() {
+  this.timeout("2000s");
+
+  for(let i = 0; i <= 10; i++) {
+    let calculations = [];
+    let items;
+
+    it(`${i} of 10`, perfTest({
       setupRun() {
+        let quickSortRand = rand.create('partiallyRewritten');
+
+        calculations[0] = i > 0 ? rewrittenCalc0 : plainCalc0;
+        calculations[1] = i > 1 ? rewrittenCalc1 : plainCalc1;
+        calculations[2] = i > 2 ? rewrittenCalc2 : plainCalc2;
+        calculations[3] = i > 3 ? rewrittenCalc3 : plainCalc3;
+        calculations[4] = i > 4 ? rewrittenCalc4 : plainCalc4;
+        calculations[5] = i > 5 ? rewrittenCalc5 : plainCalc5;
+        calculations[6] = i > 6 ? rewrittenCalc6 : plainCalc6;
+        calculations[7] = i > 7 ? rewrittenCalc7 : plainCalc7;
+        calculations[8] = i > 8 ? rewrittenCalc8 : plainCalc8;
+        calculations[9] = i > 9 ? rewrittenCalc9 : plainCalc9;
+
         items = [];
-        for(let i = 0; i < 1000; i++) {
+        for(let j = 0; j < 30; j++) { // 50
           items.push(quickSortRand.random());
         }
       },
       run() {
-        quickSort(items);
+        calculations.forEach(calc => calc(items));
       }
     }));
-  });
-
-  describe("Partially Rewritten", function() {
-
-    for(let i = 0; i <= 10; i++) {
-      let calculations = [];
-      let items;
-
-      it(`Partially Rewritten (${i} of 10)`, perfTest({
-        setupRun() {
-          let quickSortRand = rand.create('partiallyRewritten');
-
-          calculations[0] = i > 0 ? rewrittenCalc0 : plainCalc0;
-          calculations[1] = i > 1 ? rewrittenCalc1 : plainCalc1;
-          calculations[2] = i > 2 ? rewrittenCalc2 : plainCalc2;
-          calculations[3] = i > 3 ? rewrittenCalc3 : plainCalc3;
-          calculations[4] = i > 4 ? rewrittenCalc4 : plainCalc4;
-          calculations[5] = i > 5 ? rewrittenCalc5 : plainCalc5;
-          calculations[6] = i > 6 ? rewrittenCalc6 : plainCalc6;
-          calculations[7] = i > 7 ? rewrittenCalc7 : plainCalc7;
-          calculations[8] = i > 8 ? rewrittenCalc8 : plainCalc8;
-          calculations[9] = i > 9 ? rewrittenCalc9 : plainCalc9;
-
-          items = [];
-          for(let j = 0; j < 30; j++) { // 50
-            items.push(quickSortRand.random());
-          }
-        },
-        run() {
-          calculations.forEach(calc => calc(items));
-        }
-      }));
-    }
-  });
+  }
 });
 
 describe('AExpr Construction', function() {

@@ -22,25 +22,22 @@ describe("Maintain Aspect Ratio", function() {
   }));
 });
 
-describe('Baseline Benchmarks', function() {
+// TODO: remove duplicate with rewriting
+describe("Rewriting Transformation Impact", function() {
   this.timeout("2000s");
 
-  // TODO: remove duplicate with rewriting
-  describe("Run", function() {
+  let quickSortRand = rand.create('quickSort'),
+      items;
 
-    let quickSortRand = rand.create('quickSort'),
-        items;
-
-    it("Quicksort", perfTest({
-      setupRun() {
-        items = [];
-        for(let i = 0; i < 1000; i++) {
-          items.push(quickSortRand.random());
-        }
-      },
-      run() {
-        quickSort(items);
+  it("Baseline", perfTest({
+    setupRun() {
+      items = [];
+      for(let i = 0; i < 1000; i++) {
+        items.push(quickSortRand.random());
       }
-    }));
-  });
+    },
+    run() {
+      quickSort(items);
+    }
+  }));
 });

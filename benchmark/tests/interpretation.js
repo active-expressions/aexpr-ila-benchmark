@@ -23,41 +23,36 @@ describe("Maintain Aspect Ratio", function () {
   }));
 });
 
-describe('Interpretation Benchmarks', function() {
+describe("Partially Wrapped", function() {
   this.timeout("2000s");
 
-  describe("Run2", function() {
-    describe("Run", function() {
+  let rects;
 
-    let rects;
+  for(let i = 0; i <= 10; i++) {
+    it(`${i} of 10`, perfTest({
+      setupRun() {
+        rects = [];
+        for(let j = 0; j < 10; j++) {
+          let rect = createRectangle(20, 10);
 
-    for(let i = 0; i <= 10; i++) {
-      it(`Partially wrapped (${i} of 10)`, perfTest({
-        setupRun() {
-          rects = [];
-          for(let j = 0; j < 10; j++) {
-            let rect = createRectangle(20, 10);
-
-            if(j < i) {
-              aexprInterpretation(() => rect.aspectRatio(), {rect});
-            }
-
-            rects[j] = rect;
+          if(j < i) {
+            aexprInterpretation(() => rect.aspectRatio(), {rect});
           }
-        },
-        run() {
-          for (let i = 0; i < 10000; i++) {
-            for (let l = 0; l < 10; l++) {
-              let r = rects[l];
-              r.height -= r.width;
-              r.width += r.height;
-            }
+
+          rects[j] = rect;
+        }
+      },
+      run() {
+        for (let i = 0; i < 10000; i++) {
+          for (let l = 0; l < 10; l++) {
+            let r = rects[l];
+            r.height -= r.width;
+            r.width += r.height;
           }
         }
-      }));
-    }
-    });
-  });
+      }
+    }));
+  }
 });
 
 describe('AExpr Construction', function() {
