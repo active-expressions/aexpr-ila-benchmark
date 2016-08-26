@@ -58,3 +58,33 @@ describe('Interpretation Benchmarks', function() {
     });
   });
 });
+
+describe('AExpr Construction', function() {
+  this.timeout("2000s");
+
+  describe("Same Object", function() {
+
+    let rect = createRectangle(20, 10);
+
+    it("Interpretation", perfTest({
+      run() {
+        aexprInterpretation(() => rect.aspectRatio(), locals);
+      }
+    }));
+  });
+
+  describe("Different Object", function() {
+
+    let rect;
+
+    it("Interpretation", perfTest({
+      setupRun() {
+        rect = createRectangle(20, 10);
+      },
+      run() {
+        aexprInterpretation(() => rect.aspectRatio(), locals);
+      }
+    }));
+  });
+});
+

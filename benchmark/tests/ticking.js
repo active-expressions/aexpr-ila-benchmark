@@ -26,3 +26,33 @@ describe('Ticking Benchmarks', function() {
     }));
   });
 });
+
+describe('AExpr Construction', function() {
+  this.timeout("2000s");
+
+  describe("Same Object", function() {
+
+    let rect = createRectangle(20, 10);
+
+    it("Ticking", perfTest({
+      run() {
+        aexprTicking(() => rect.aspectRatio());
+      }
+    }));
+  });
+
+  describe("Different Object", function() {
+
+    let rect;
+
+    it("Ticking", perfTest({
+      setupRun() {
+        rect = createRectangle(20, 10);
+      },
+      run() {
+        aexprTicking(() => rect.aspectRatio());
+      }
+    }));
+  });
+});
+

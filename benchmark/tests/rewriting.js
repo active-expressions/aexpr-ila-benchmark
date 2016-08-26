@@ -99,3 +99,33 @@ describe('Rewriting Benchmarks', function() {
     }
   });
 });
+
+describe('AExpr Construction', function() {
+  this.timeout("2000s");
+
+  describe("Same Object", function() {
+
+    let rect = createRectangle(20, 10);
+
+    it("Rewriting", perfTest({
+      run() {
+        aexpr(() => rect.aspectRatio());
+      }
+    }));
+  });
+
+  describe("Different Object", function() {
+
+    let rect;
+
+    it("Rewriting", perfTest({
+      setupRun() {
+        rect = createRectangle(20, 10);
+      },
+      run() {
+        aexpr(() => rect.aspectRatio());
+      }
+    }));
+  });
+});
+
