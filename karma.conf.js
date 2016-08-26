@@ -3,6 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var builder = require('xmlbuilder');
 
+// TODO: extract reporter to its own file
 var JSONReporter = function(baseReporterDecorator, config, emitter, logger, helper, formatError) {
   var json;
 
