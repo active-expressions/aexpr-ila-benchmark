@@ -26,6 +26,8 @@ import plainCalc8 from './deps/toSkip8.js';
 import plainCalc9 from './deps/toSkip9.js';
 import plainCalc0 from './deps/toSkip0.js';
 
+import { reset } from 'aexpr-source-transformation-propagation';
+
 describe("Maintain Aspect Ratio", function() {
   this.timeout("2000s");
 
@@ -157,16 +159,21 @@ describe("AExpr and Callback Count", function() {
 
         let indexGenerator = rand.create('aexprIndexGenerator');
         for(let aexprId = 0; aexprId < numberOfAExprs; aexprId++) {
+            // TODO: actually generate the index at random!
           let listener = aexpr(() => items[aexprId]);
           times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
         }
       },
       run() {
         quickSort(items);
+      },
+      teardownRun() {
+        reset();
       }
     }));
   }
 
+  // TODO: Bigger Counts
   times(5, numAExpr =>
     times(1, cbPerAExpr =>
         makeTestCaseWith(numAExpr, cbPerAExpr)
