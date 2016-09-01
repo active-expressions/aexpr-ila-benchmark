@@ -35,14 +35,20 @@ describe("Maintain Aspect Ratio", function() {
   const targetAspectRatio = 2;
   let aspectRatioRand = rand.create('aspectRatio');
 
-  it("Rewriting", perfTest(function () {
-    let rect = createRectangle(20, 10);
-    aexpr(() => rect.aspectRatio())
-        .onChange(ratio => rect.height = rect.width / targetAspectRatio);
+  it("Rewriting", perfTest({
+    run() {
+      let rect = createRectangle(20, 10);
+      // TODO: move aexpr creation to setup
+      aexpr(() => rect.aspectRatio())
+          .onChange(ratio => rect.height = rect.width / targetAspectRatio);
 
-    for(let i = 0; i < aspectRatioCount; i++) {
-      rect.width = aspectRatioRand.random();
-      expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+      for(let i = 0; i < aspectRatioCount; i++) {
+        rect.width = aspectRatioRand.random();
+        expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+      }
+    },
+    teardownRun() {
+      reset();
     }
   }));
 });
@@ -111,6 +117,9 @@ describe('AExpr Construction', function() {
     it("Rewriting", perfTest({
       run() {
         aexpr(() => rect.aspectRatio());
+      },
+      teardownRun() {
+        reset();
       }
     }));
   });
@@ -125,6 +134,9 @@ describe('AExpr Construction', function() {
       },
       run() {
         aexpr(() => rect.aspectRatio());
+      },
+      teardownRun() {
+        reset();
       }
     }));
   });
@@ -155,7 +167,7 @@ describe("AExpr and Callback Count", function() {
 
     it(`${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} callbacks each`, perfTest({
       setupRun() {
-        items = getRandomArrayOfLength(50);
+        items = getRandomArrayOfLength(1000);
 
         let indexGenerator = rand.create('aexprIndexGenerator');
         for(let aexprId = 0; aexprId < numberOfAExprs; aexprId++) {
@@ -175,8 +187,8 @@ describe("AExpr and Callback Count", function() {
 
   // TODO: Bigger Counts
   times(5, numAExpr =>
-    times(1, cbPerAExpr =>
-        makeTestCaseWith(numAExpr, cbPerAExpr)
+    times(5, cbPerAExpr =>
+        makeTestCaseWith(20 * numAExpr, 20 * cbPerAExpr)
     )
   );
 });
