@@ -1,4 +1,5 @@
 import perfTest from '../perf_test.js';
+import { times, getRandomArrayOfLength } from './test-utils.js';
 import rand from 'random-seed';
 import { createRectangle } from './fixture.js';
 
@@ -142,25 +143,8 @@ describe('AExpr Construction', function() {
   });
 });
 
-describe("AExpr and Callback Count", function() {
+describe("AExpr and Callback Count (Rewriting)", function() {
   this.timeout("2000s");
-
-  function times(max, cb) {
-    for(let i = 0; i < max; i++) {
-      cb(i);
-    }
-  }
-
-  function getRandomArrayOfLength(l) {
-    let quickSortRand = rand.create('partiallyRewritten');
-
-    let arr = [];
-    for(let j = 0; j < l; j++) {
-      arr.push(quickSortRand.random());
-    }
-
-    return arr;
-  }
 
   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
     let items;
