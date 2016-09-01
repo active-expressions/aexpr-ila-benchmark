@@ -1,6 +1,9 @@
 import perfTest from '../perf_test.js';
+import { times, getRandomArrayOfLength } from './test-utils.js';
 import rand from 'random-seed';
+
 import { createRectangle } from './fixture.js';
+import quickSort from './deps/quicksort.js';
 
 import { aexprInterpretation } from 'active-expressions';
 
@@ -82,5 +85,36 @@ describe('AExpr Construction', function() {
       }
     }));
   });
+});
+
+describe("AExpr and Callback Count (Interpretation)", function() {
+  this.timeout("2000s");
+
+  function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
+    let items;
+
+    it(`${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} callbacks each`, perfTest({
+      setupRun() {
+        items = getRandomArrayOfLength(1000);
+
+        let indexGenerator = rand.create('aexprIndexGenerator');
+        for(let aexprId = 0; aexprId < numberOfAExprs; aexprId++) {
+          // TODO: actually generate the index at random!
+          let listener = aexprInterpretation(() => items[aexprId], locals);
+          times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
+        }
+      },
+      run() {
+        quickSort(items);
+      }
+    }));
+  }
+
+  // TODO: Bigger Counts
+  times(5, numAExpr =>
+      times(5, cbPerAExpr =>
+          makeTestCaseWith(20 * numAExpr, 20 * cbPerAExpr)
+      )
+  );
 });
 
