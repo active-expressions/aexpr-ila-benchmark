@@ -29,6 +29,48 @@ import plainCalc0 from './deps/toSkip0.js';
 
 import { reset } from 'aexpr-source-transformation-propagation';
 
+describe('AExpr Construction', function() {
+  this.timeout("2000s");
+
+  let num = 1000;
+
+  describe("Same Object", function() {
+
+    let rect = createRectangle(20, 10);
+
+    it("Rewriting", perfTest({
+      run() {
+        for(let i = 0; i < num; i++) {
+          aexpr(() => rect.aspectRatio());
+        }
+      },
+      teardownRun() {
+        reset();
+      }
+    }));
+  });
+
+  describe("Different Object", function() {
+    let rects;
+
+    it("Rewriting", perfTest({
+      setupRun() {
+        rects = [];
+        times(num, () => rects.push(createRectangle(20, 10)));
+      },
+      run() {
+        for(let i = 0; i < num; i++) {
+          let rect = rects[i];
+          aexpr(() => rect.aspectRatio());
+        }
+      },
+      teardownRun() {
+        reset();
+      }
+    }));
+  });
+});
+
 describe("Maintain Aspect Ratio", function() {
   this.timeout("2000s");
 
@@ -106,41 +148,6 @@ describe("Partially Rewritten", function() {
       }
     }));
   }
-});
-
-describe('AExpr Construction', function() {
-  this.timeout("2000s");
-
-  describe("Same Object", function() {
-
-    let rect = createRectangle(20, 10);
-
-    it("Rewriting", perfTest({
-      run() {
-        aexpr(() => rect.aspectRatio());
-      },
-      teardownRun() {
-        reset();
-      }
-    }));
-  });
-
-  describe("Different Object", function() {
-
-    let rect;
-
-    it("Rewriting", perfTest({
-      setupRun() {
-        rect = createRectangle(20, 10);
-      },
-      run() {
-        aexpr(() => rect.aspectRatio());
-      },
-      teardownRun() {
-        reset();
-      }
-    }));
-  });
 });
 
 describe("AExpr and Callback Count (Rewriting)", function() {

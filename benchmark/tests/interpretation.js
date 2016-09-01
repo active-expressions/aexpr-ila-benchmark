@@ -7,6 +7,43 @@ import quickSort from './deps/quicksort.js';
 
 import { aexprInterpretation } from 'active-expressions';
 
+describe('AExpr Construction', function() {
+  this.timeout("2000s");
+
+  let num = 1000;
+
+  describe("Same Object", function() {
+
+    let rect = createRectangle(20, 10);
+
+    it("Interpretation", perfTest({
+      run() {
+        for(let i = 0; i < num; i++) {
+          aexprInterpretation(() => rect.aspectRatio(), locals);
+        }
+      }
+    }));
+  });
+
+  describe("Different Object", function() {
+
+    let rects;
+
+    it("Interpretation", perfTest({
+      setupRun() {
+        rects = [];
+        times(num, () => rects.push(createRectangle(20, 10)));
+      },
+      run() {
+        for(let i = 0; i < num; i++) {
+          let rect = rects[i];
+          aexprInterpretation(() => rect.aspectRatio(), locals);
+        }
+      }
+    }));
+  });
+});
+
 describe("Maintain Aspect Ratio", function () {
   this.timeout("2000s");
 
@@ -56,35 +93,6 @@ describe("Partially Wrapped", function() {
       }
     }));
   }
-});
-
-describe('AExpr Construction', function() {
-  this.timeout("2000s");
-
-  describe("Same Object", function() {
-
-    let rect = createRectangle(20, 10);
-
-    it("Interpretation", perfTest({
-      run() {
-        aexprInterpretation(() => rect.aspectRatio(), locals);
-      }
-    }));
-  });
-
-  describe("Different Object", function() {
-
-    let rect;
-
-    it("Interpretation", perfTest({
-      setupRun() {
-        rect = createRectangle(20, 10);
-      },
-      run() {
-        aexprInterpretation(() => rect.aspectRatio(), locals);
-      }
-    }));
-  });
 });
 
 describe("AExpr and Callback Count (Interpretation)", function() {
