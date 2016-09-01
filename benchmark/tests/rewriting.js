@@ -128,3 +128,49 @@ describe('AExpr Construction', function() {
   });
 });
 
+describe("AExpr and Callback Count", function() {
+  this.timeout("2000s");
+
+  function times(max, cb) {
+    for(let i = 0; i < max; i++) {
+      cb(i);
+    }
+  }
+
+  function getRandomArrayOfLength(l) {
+    let quickSortRand = rand.create('partiallyRewritten');
+
+    let arr = [];
+    for(let j = 0; j < l; j++) {
+      arr.push(quickSortRand.random());
+    }
+
+    return arr;
+  }
+
+  function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
+    let items;
+
+    it(`${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} callbacks each`, perfTest({
+      setupRun() {
+        items = getRandomArrayOfLength(50);
+
+        let indexGenerator = rand.create('aexprIndexGenerator');
+        for(let aexprId = 0; aexprId < numberOfAExprs; aexprId++) {
+          let listener = aexpr(() => items[aexprId]);
+          times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
+        }
+      },
+      run() {
+        quickSort(items);
+      }
+    }));
+  }
+
+  times(5, numAExpr =>
+    times(1, cbPerAExpr =>
+        makeTestCaseWith(numAExpr, cbPerAExpr)
+    )
+  );
+});
+
