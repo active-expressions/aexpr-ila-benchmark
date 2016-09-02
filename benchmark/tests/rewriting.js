@@ -32,7 +32,7 @@ import { reset } from 'aexpr-source-transformation-propagation';
 describe('AExpr Construction', function() {
   this.timeout("2000s");
 
-  let num = 1000;
+  let num = 100;
 
   describe("Same Object", function() {
 

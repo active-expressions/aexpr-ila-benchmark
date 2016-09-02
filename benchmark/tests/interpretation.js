@@ -10,7 +10,7 @@ import { aexprInterpretation } from 'active-expressions';
 describe('AExpr Construction', function() {
   this.timeout("2000s");
 
-  let num = 1000;
+  let num = 100;
 
   describe("Same Object", function() {
 
