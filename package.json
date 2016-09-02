@@ -30,9 +30,9 @@
   "homepage": "https://github.com/active-expressions/active-expressions-benchmark#readme",
   "dependencies": {
     "active-expressions": "^1.5.0",
-    "aexpr-source-transformation-propagation": "^1.2.1",
+    "aexpr-source-transformation-propagation": "^1.4.2",
     "babel-cli": "^6.11.4",
-    "babel-plugin-aexpr-source-transformation": "^2.1.3",
+    "babel-plugin-aexpr-source-transformation": "^2.2.0",
     "babel-plugin-locals": "^1.0.1",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-es2015-rollup": "^1.2.0",
