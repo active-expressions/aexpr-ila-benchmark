@@ -1,9 +1,11 @@
 import perfTest from '../perf_test.js';
 import { times, getRandomArrayOfLength } from './test-utils.js';
 import rand from 'random-seed';
-import { createRectangle } from './fixture.js';
 
+import { createRectangle } from './fixture.js';
 import quickSort from './deps/quicksort.js';
+
+import { numberOfAExprsToCreate } from './params.js';
 
 import rewrittenCalc1 from './deps/toRewrite1.js';
 import rewrittenCalc2 from './deps/toRewrite2.js';
@@ -32,15 +34,13 @@ import { reset } from 'aexpr-source-transformation-propagation';
 describe('AExpr Construction', function() {
   this.timeout("2000s");
 
-  let num = 100;
-
   describe("Same Object", function() {
 
     let rect = createRectangle(20, 10);
 
     it("Rewriting", perfTest({
       run() {
-        for(let i = 0; i < num; i++) {
+        for(let i = 0; i < numberOfAExprsToCreate; i++) {
           aexpr(() => rect.aspectRatio());
         }
       },
@@ -56,10 +56,10 @@ describe('AExpr Construction', function() {
     it("Rewriting", perfTest({
       setupRun() {
         rects = [];
-        times(num, () => rects.push(createRectangle(20, 10)));
+        times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
       },
       run() {
-        for(let i = 0; i < num; i++) {
+        for(let i = 0; i < numberOfAExprsToCreate; i++) {
           let rect = rects[i];
           aexpr(() => rect.aspectRatio());
         }

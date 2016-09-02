@@ -5,12 +5,12 @@ import rand from 'random-seed';
 import { createRectangle } from './fixture.js';
 import quickSort from './deps/quicksort.js';
 
+import { numberOfAExprsToCreate } from './params.js';
+
 import { aexprInterpretation } from 'active-expressions';
 
 describe('AExpr Construction', function() {
   this.timeout("2000s");
-
-  let num = 100;
 
   describe("Same Object", function() {
 
@@ -18,7 +18,7 @@ describe('AExpr Construction', function() {
 
     it("Interpretation", perfTest({
       run() {
-        for(let i = 0; i < num; i++) {
+        for(let i = 0; i < numberOfAExprsToCreate; i++) {
           aexprInterpretation(() => rect.aspectRatio(), locals);
         }
       }
@@ -32,10 +32,10 @@ describe('AExpr Construction', function() {
     it("Interpretation", perfTest({
       setupRun() {
         rects = [];
-        times(num, () => rects.push(createRectangle(20, 10)));
+        times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
       },
       run() {
-        for(let i = 0; i < num; i++) {
+        for(let i = 0; i < numberOfAExprsToCreate; i++) {
           let rect = rects[i];
           aexprInterpretation(() => rect.aspectRatio(), locals);
         }
