@@ -5,7 +5,7 @@ import rand from 'random-seed';
 import { createRectangle } from './fixture.js';
 import quickSort from './deps/quicksort.js';
 
-import { numberOfAExprsToCreate } from './params.js';
+import { numberOfAExprsToCreate, mochaTimeout } from './params.js';
 
 import rewrittenCalc1 from './deps/toRewrite1.js';
 import rewrittenCalc2 from './deps/toRewrite2.js';
@@ -30,9 +30,9 @@ import plainCalc9 from './deps/toSkip9.js';
 import plainCalc0 from './deps/toSkip0.js';
 
 import { reset } from 'aexpr-source-transformation-propagation';
-
+/*
 describe('AExpr Construction', function() {
-  this.timeout("200000s");
+  this.timeout(mochaTimeout);
 
   describe("Same Object", function() {
 
@@ -70,35 +70,40 @@ describe('AExpr Construction', function() {
     }));
   });
 });
-
+*/
 describe("Maintain Aspect Ratio", function() {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   let aspectRatioCount = 1000;
   const targetAspectRatio = 2;
   let aspectRatioRand = rand.create('aspectRatio');
-
+    let randomWidths;
+    let rect;
   it("Rewriting", perfTest({
+      setupRun() {
+          rect = createRectangle(20, 10);
+          aexpr(() => rect.aspectRatio())
+              .onChange(ratio => rect.height = rect.width / targetAspectRatio);
+          randomWidths = [];
+          for(let i = 0; i < aspectRatioCount; i++) {
+              randomWidths.push(aspectRatioRand.random());
+          }
+      },
     run() {
-      let rect = createRectangle(20, 10);
-      // TODO: move aexpr creation to setup
-      aexpr(() => rect.aspectRatio())
-          .onChange(ratio => rect.height = rect.width / targetAspectRatio);
-
-      for(let i = 0; i < aspectRatioCount; i++) {
-        rect.width = aspectRatioRand.random();
-        expect(rect.aspectRatio()).to.equal(targetAspectRatio);
-      }
+        randomWidths.forEach(val => {
+            rect.width = val;
+            expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+        });
     },
     teardownRun() {
       reset();
     }
   }));
 });
-
+/*
 // TODO: remove duplicate with baseline
 describe("Rewriting Transformation Impact", function() {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   let quickSortRand = rand.create('quickSort'),
       items;
@@ -117,7 +122,7 @@ describe("Rewriting Transformation Impact", function() {
 });
 
 describe("Partially Rewritten", function() {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   for(let i = 0; i <= 10; i++) {
     let calculations = [];
@@ -151,7 +156,7 @@ describe("Partially Rewritten", function() {
 });
 
 describe("AExpr and Callback Count (Rewriting)", function() {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
     let items;
@@ -183,4 +188,4 @@ describe("AExpr and Callback Count (Rewriting)", function() {
     )
   );
 });
-
+*/

@@ -4,12 +4,12 @@ import rand from 'random-seed';
 
 import { createRectangle } from './fixture.js';
 
-import { numberOfAExprsToCreate } from './params.js';
+import { numberOfAExprsToCreate, mochaTimeout } from './params.js';
 
 import { aexprTicking, checkTicking } from 'active-expressions';
-
+/*
 describe('AExpr Construction', function() {
-  this.timeout("200000s");
+  this.timeout(mochaTimeout);
 
   describe("Same Object", function() {
 
@@ -42,24 +42,33 @@ describe('AExpr Construction', function() {
     }));
   });
 });
+*/
 
 describe("Maintain Aspect Ratio", function() {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   let aspectRatioCount = 1000;
   const targetAspectRatio = 2;
   let aspectRatioRand = rand.create('aspectRatio');
-
-  it("Ticking", perfTest(function () {
-    let rect = createRectangle(20, 10);
-    let exp = aexprTicking(() => rect.aspectRatio())
-        .onChange(ratio => rect.height = rect.width / targetAspectRatio);
-
-    for(let i = 0; i < aspectRatioCount; i++) {
-      rect.width = aspectRatioRand.random();
-      checkTicking([exp]);
-      expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+  let randomWidths;
+  let rect;
+  let exp;
+  it("Ticking", perfTest({
+    setupRun() {
+      rect = createRectangle(20, 10);
+      exp = aexprTicking(() => rect.aspectRatio())
+          .onChange(ratio => rect.height = rect.width / targetAspectRatio);
+      randomWidths = [];
+      for(let i = 0; i < aspectRatioCount; i++) {
+        randomWidths.push(aspectRatioRand.random());
+      }
+    },
+    run() {
+      randomWidths.forEach(val => {
+        rect.width = val;
+        checkTicking([exp]);
+        expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+      });
     }
   }));
 });
-

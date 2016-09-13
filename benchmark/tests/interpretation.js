@@ -5,12 +5,12 @@ import rand from 'random-seed';
 import { createRectangle } from './fixture.js';
 import quickSort from './deps/quicksort.js';
 
-import { numberOfAExprsToCreate } from './params.js';
+import { numberOfAExprsToCreate, mochaTimeout } from './params.js';
 
 import { aexprInterpretation } from 'active-expressions';
-
+/*
 describe('AExpr Construction', function() {
-  this.timeout("200000s");
+  this.timeout(mochaTimeout);
 
   describe("Same Object", function() {
 
@@ -43,28 +43,37 @@ describe('AExpr Construction', function() {
     }));
   });
 });
-
+*/
 describe("Maintain Aspect Ratio", function () {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   let aspectRatioCount = 1000;
   const targetAspectRatio = 2;
   let aspectRatioRand = rand.create('aspectRatio');
+    let randomWidths;
+    let rect;
 
-  it("Interpretation", perfTest(function () {
-    let rect = createRectangle(20, 10);
-    aexprInterpretation(() => rect.aspectRatio(), {rect})
-        .onChange(ratio => rect.height = rect.width / targetAspectRatio);
-
-    for (let i = 0; i < aspectRatioCount; i++) {
-      rect.width = aspectRatioRand.random();
-      expect(rect.aspectRatio()).to.equal(targetAspectRatio);
-    }
+  it("Interpretation", perfTest({
+      setupRun() {
+          rect = createRectangle(20, 10);
+          aexprInterpretation(() => rect.aspectRatio(), {rect})
+              .onChange(ratio => rect.height = rect.width / targetAspectRatio);
+          randomWidths = [];
+          for(let i = 0; i < aspectRatioCount; i++) {
+              randomWidths.push(aspectRatioRand.random());
+          }
+      },
+      run() {
+          randomWidths.forEach(val => {
+              rect.width = val;
+              expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+          });
+      }
   }));
 });
-
+/*
 describe("Partially Wrapped", function() {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   let rects;
 
@@ -96,7 +105,7 @@ describe("Partially Wrapped", function() {
 });
 
 describe("AExpr and Callback Count (Interpretation)", function() {
-  this.timeout("2000s");
+  this.timeout(mochaTimeout);
 
   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
     let items;
@@ -125,4 +134,4 @@ describe("AExpr and Callback Count (Interpretation)", function() {
       )
   );
 });
-
+*/
