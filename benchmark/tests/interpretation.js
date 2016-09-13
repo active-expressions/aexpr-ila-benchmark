@@ -10,7 +10,7 @@ import { numberOfAExprsToCreate } from './params.js';
 import { aexprInterpretation } from 'active-expressions';
 
 describe('AExpr Construction', function() {
-  this.timeout("2000s");
+  this.timeout("200000s");
 
   describe("Same Object", function() {
 
@@ -19,7 +19,7 @@ describe('AExpr Construction', function() {
     it("Interpretation", perfTest({
       run() {
         for(let i = 0; i < numberOfAExprsToCreate; i++) {
-          aexprInterpretation(() => rect.aspectRatio(), locals);
+          aexprInterpretation(() => rect.aspectRatio(), {rect});
         }
       }
     }));
@@ -37,7 +37,7 @@ describe('AExpr Construction', function() {
       run() {
         for(let i = 0; i < numberOfAExprsToCreate; i++) {
           let rect = rects[i];
-          aexprInterpretation(() => rect.aspectRatio(), locals);
+          aexprInterpretation(() => rect.aspectRatio(), {rect});
         }
       }
     }));

@@ -32,7 +32,7 @@ import plainCalc0 from './deps/toSkip0.js';
 import { reset } from 'aexpr-source-transformation-propagation';
 
 describe('AExpr Construction', function() {
-  this.timeout("2000s");
+  this.timeout("200000s");
 
   describe("Same Object", function() {
 

@@ -9,7 +9,7 @@ import { numberOfAExprsToCreate } from './params.js';
 import { aexprTicking, checkTicking } from 'active-expressions';
 
 describe('AExpr Construction', function() {
-  this.timeout("2000s");
+  this.timeout("200000s");
 
   describe("Same Object", function() {
 

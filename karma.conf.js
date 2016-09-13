@@ -198,11 +198,16 @@ module.exports = function(config) {
       }
     },
 
-    browserNoActivityTimeout: 8*60000, // 8min (so build does not timeout)
-    browserDisconnectTimeout: 8*60000, // 8min (so build does not timeout)
+    browserNoActivityTimeout: 3000*60*1000, // 8min (so build does not timeout)
+    browserDisconnectTimeout: 3000*60*1000, // 8min (so build does not timeout)
     client: {
-      captureConsole: false
+      captureConsole: false,
+      mocha: {
+        timeout: 3000 * 60 * 1000
+      }
     },
+    captureTimeout: 3000 * 60 * 1000, // it was already there
+    browserDisconnectTolerance : 1,
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
