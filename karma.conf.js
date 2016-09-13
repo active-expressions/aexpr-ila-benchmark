@@ -136,9 +136,9 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [
+    files: (process.env.TRAVIS ? ['benchmark/tests/travis.config.js'] : []).concat([
       'benchmark/bundles/*.js'
-    ],
+    ]),
 
 
     // list of files to exclude
