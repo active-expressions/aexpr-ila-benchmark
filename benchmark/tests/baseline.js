@@ -4,13 +4,11 @@ import { createRectangle } from './fixture.js';
 
 import quickSort from './deps/quicksort.js';
 
-import { mochaTimeout } from './params.js';
+import { mochaTimeout, aspectRatioCount, targetAspectRatio } from './params.js';
 
 describe("Maintain Aspect Ratio", function() {
   this.timeout(mochaTimeout);
 
-  let aspectRatioCount = 1000;
-  const targetAspectRatio = 2;
   let aspectRatioRand = rand.create('aspectRatio');
   let randomWidths;
   let rect;

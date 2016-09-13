@@ -5,7 +5,7 @@ import rand from 'random-seed';
 import { createRectangle } from './fixture.js';
 import quickSort from './deps/quicksort.js';
 
-import { numberOfAExprsToCreate, mochaTimeout } from './params.js';
+import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRatio } from './params.js';
 
 import rewrittenCalc1 from './deps/toRewrite1.js';
 import rewrittenCalc2 from './deps/toRewrite2.js';
@@ -74,11 +74,10 @@ describe('AExpr Construction', function() {
 describe("Maintain Aspect Ratio", function() {
   this.timeout(mochaTimeout);
 
-  let aspectRatioCount = 1000;
-  const targetAspectRatio = 2;
   let aspectRatioRand = rand.create('aspectRatio');
     let randomWidths;
     let rect;
+
   it("Rewriting", perfTest({
       setupRun() {
           rect = createRectangle(20, 10);
