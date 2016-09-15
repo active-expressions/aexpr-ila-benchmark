@@ -14,7 +14,8 @@
     "watch-baseline": "chokidar benchmark/tests/baseline* -c \"npm run build-baseline\"",
     "watch-ticking": "chokidar benchmark/tests/ticking* -c \"npm run build-ticking\"",
     "watch-rewriting": "chokidar benchmark/tests/rewriting* -c \"npm run build-rewriting\"",
-    "watch-interpretation": "chokidar benchmark/tests/interpretation* -c \"npm run build-interpretation\""
+    "watch-interpretation": "chokidar benchmark/tests/interpretation* -c \"npm run build-interpretation\"",
+	"multiple-benchs": "for /l %x in (1, 1, 100) do (karma start --single-run && cd results && copy latest.json latest%x.json && cd ..)"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,7 @@
   },
   "homepage": "https://github.com/active-expressions/active-expressions-benchmark#readme",
   "dependencies": {
-    "active-expressions": "^1.5.0",
+    "active-expressions": "^1.5.1",
     "aexpr-source-transformation-propagation": "^1.4.2",
     "babel-cli": "^6.11.4",
     "babel-plugin-aexpr-source-transformation": "^2.2.0",
