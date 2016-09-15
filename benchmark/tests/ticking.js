@@ -6,23 +6,10 @@ import { createRectangle } from './fixture.js';
 
 import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRatio } from './params.js';
 
-import { aexprTicking, checkTicking } from 'active-expressions';
-/*
+import { aexprTicking, checkTicking, clearDefaultActiveExpressions } from 'active-expressions';
+
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
-
-  describe("Same Object", function() {
-
-    let rect = createRectangle(20, 10);
-
-    it("Ticking", perfTest({
-      run() {
-        for(let i = 0; i < numberOfAExprsToCreate; i++) {
-          aexprTicking(() => rect.aspectRatio());
-        }
-      }
-    }));
-  });
 
   describe("Different Object", function() {
     let rects;
@@ -37,13 +24,32 @@ describe('AExpr Construction', function() {
           let rect = rects[i];
           aexprTicking(() => rect.aspectRatio());
         }
+      },
+      teardownRun() {
+        clearDefaultActiveExpressions();
       }
       // TODO: teardown: remove/reset old aexprs!
     }));
   });
-});
-*/
 
+  describe("Same Object", function() {
+
+    let rect = createRectangle(20, 10);
+
+    it("Ticking", perfTest({
+      run() {
+        for(let i = 0; i < numberOfAExprsToCreate; i++) {
+          aexprTicking(() => rect.aspectRatio());
+        }
+      },
+      teardownRun() {
+        clearDefaultActiveExpressions();
+      }
+    }));
+  });
+});
+
+/*
 describe("Maintain Aspect Ratio", function() {
   this.timeout(mochaTimeout);
 
@@ -71,3 +77,4 @@ describe("Maintain Aspect Ratio", function() {
     }
   }));
 });
+*/

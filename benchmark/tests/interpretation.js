@@ -8,7 +8,7 @@ import quickSort from './deps/quicksort.js';
 import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRatio } from './params.js';
 
 import { aexprInterpretation } from 'active-expressions';
-/*
+
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
 
@@ -43,7 +43,7 @@ describe('AExpr Construction', function() {
     }));
   });
 });
-*/
+/*
 describe("Maintain Aspect Ratio", function () {
   this.timeout(mochaTimeout);
 

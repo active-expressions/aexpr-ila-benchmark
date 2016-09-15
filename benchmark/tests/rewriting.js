@@ -30,7 +30,7 @@ import plainCalc9 from './deps/toSkip9.js';
 import plainCalc0 from './deps/toSkip0.js';
 
 import { reset } from 'aexpr-source-transformation-propagation';
-/*
+
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
 
@@ -70,7 +70,7 @@ describe('AExpr Construction', function() {
     }));
   });
 });
-*/
+/*
 describe("Maintain Aspect Ratio", function() {
   this.timeout(mochaTimeout);
 
@@ -99,7 +99,7 @@ describe("Maintain Aspect Ratio", function() {
     }
   }));
 });
-/*
+
 // TODO: remove duplicate with baseline
 describe("Rewriting Transformation Impact", function() {
   this.timeout(mochaTimeout);
