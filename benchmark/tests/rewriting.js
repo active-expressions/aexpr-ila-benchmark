@@ -5,7 +5,14 @@ import rand from 'random-seed';
 import { createRectangle } from './fixture.js';
 import quickSort from './deps/quicksort.js';
 
-import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRatio } from './params.js';
+import {
+  numberOfAExprsToCreate,
+    mochaTimeout,
+    aspectRatioCount,
+    targetAspectRatio,
+numberOfAExprs,
+callbacksPerAExpr
+} from './params.js';
 
 import rewrittenCalc1 from './deps/toRewrite1.js';
 import rewrittenCalc2 from './deps/toRewrite2.js';
@@ -31,6 +38,7 @@ import plainCalc0 from './deps/toSkip0.js';
 
 import { reset } from 'aexpr-source-transformation-propagation';
 
+/*
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
 
@@ -70,7 +78,7 @@ describe('AExpr Construction', function() {
     }));
   });
 });
-/*
+
 describe("Maintain Aspect Ratio", function() {
   this.timeout(mochaTimeout);
 
@@ -153,6 +161,7 @@ describe("Partially Rewritten", function() {
     }));
   }
 });
+*/
 
 describe("AExpr and Callback Count (Rewriting)", function() {
   this.timeout(mochaTimeout);
@@ -160,16 +169,17 @@ describe("AExpr and Callback Count (Rewriting)", function() {
   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
     let items;
 
-    it(`${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} callbacks each`, perfTest({
+    it(`${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, perfTest({
       setupRun() {
-        items = getRandomArrayOfLength(1000);
+        let arrayLength = 1000;
+        items = getRandomArrayOfLength(arrayLength);
 
         let indexGenerator = rand.create('aexprIndexGenerator');
-        for(let aexprId = 0; aexprId < numberOfAExprs; aexprId++) {
-            // TODO: actually generate the index at random!
-          let listener = aexpr(() => items[aexprId]);
+        times(numberOfAExprs, () => {
+          let aexprIndex = indexGenerator.range(arrayLength);
+          let listener = aexpr(() => items[aexprIndex]);
           times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
-        }
+        });
       },
       run() {
         quickSort(items);
@@ -180,11 +190,9 @@ describe("AExpr and Callback Count (Rewriting)", function() {
     }));
   }
 
-  // TODO: Bigger Counts
-  times(5, numAExpr =>
-    times(5, cbPerAExpr =>
-        makeTestCaseWith(20 * numAExpr, 20 * cbPerAExpr)
-    )
-  );
+  numberOfAExprs.forEach(aexprs => {
+    callbacksPerAExpr.forEach(callbacks => {
+      makeTestCaseWith(aexprs, callbacks)
+    });
+  });
 });
-*/
