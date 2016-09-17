@@ -4,7 +4,7 @@ import { createRectangle } from './fixture.js';
 
 import quickSort from './deps/quicksort.js';
 
-import { mochaTimeout, aspectRatioCount, targetAspectRatio } from './params.js';
+import { mochaTimeout, aspectRatioCount, targetAspectRatio, rewritingImpactArraySize } from './params.js';
 
 /*
 describe("Maintain Aspect Ratio", function() {
@@ -31,6 +31,7 @@ describe("Maintain Aspect Ratio", function() {
     }
   }));
 });
+ */
 
 // TODO: remove duplicate with rewriting
 describe("Rewriting Transformation Impact", function() {
@@ -42,7 +43,7 @@ describe("Rewriting Transformation Impact", function() {
   it("Baseline", perfTest({
     setupRun() {
       items = [];
-      for(let i = 0; i < 1000; i++) {
+      for(let i = 0; i < rewritingImpactArraySize; i++) {
         items.push(quickSortRand.random());
       }
     },
@@ -51,4 +52,3 @@ describe("Rewriting Transformation Impact", function() {
     }
   }));
 });
-*/

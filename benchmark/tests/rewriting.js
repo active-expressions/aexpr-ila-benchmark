@@ -11,7 +11,8 @@ import {
     aspectRatioCount,
     targetAspectRatio,
 numberOfAExprs,
-callbacksPerAExpr
+callbacksPerAExpr,
+rewritingImpactArraySize
 } from './params.js';
 
 import rewrittenCalc1 from './deps/toRewrite1.js';
@@ -107,6 +108,7 @@ describe("Maintain Aspect Ratio", function() {
     }
   }));
 });
+*/
 
 // TODO: remove duplicate with baseline
 describe("Rewriting Transformation Impact", function() {
@@ -118,7 +120,7 @@ describe("Rewriting Transformation Impact", function() {
   it("Rewriting", perfTest({
     setupRun() {
       items = [];
-      for(let i = 0; i < 1000; i++) {
+      for(let i = 0; i < rewritingImpactArraySize; i++) {
         items.push(quickSortRand.random());
       }
     },
@@ -128,6 +130,7 @@ describe("Rewriting Transformation Impact", function() {
   }));
 });
 
+/*
 describe("Partially Rewritten", function() {
   this.timeout(mochaTimeout);
 
@@ -163,6 +166,7 @@ describe("Partially Rewritten", function() {
 });
 */
 
+/*
 describe("AExpr and Callback Count (Rewriting)", function() {
   this.timeout(mochaTimeout);
 
@@ -196,3 +200,4 @@ describe("AExpr and Callback Count (Rewriting)", function() {
     });
   });
 });
+*/
