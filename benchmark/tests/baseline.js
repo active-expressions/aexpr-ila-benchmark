@@ -6,7 +6,6 @@ import quickSort from './deps/quicksort.js';
 
 import { mochaTimeout, aspectRatioCount, targetAspectRatio, rewritingImpactArraySize } from './params.js';
 
-/*
 describe("Maintain Aspect Ratio", function() {
   this.timeout(mochaTimeout);
 
@@ -31,7 +30,6 @@ describe("Maintain Aspect Ratio", function() {
     }
   }));
 });
- */
 
 // TODO: remove duplicate with rewriting
 describe("Rewriting Transformation Impact", function() {

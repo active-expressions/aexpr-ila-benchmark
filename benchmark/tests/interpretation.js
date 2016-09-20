@@ -11,7 +11,6 @@ import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRat
 
 import { aexprInterpretation } from 'active-expressions';
 
-/*
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
 
@@ -104,7 +103,6 @@ describe("Partially Wrapped", function() {
     }));
   }
 });
-*/
 
 describe("AExpr and Callback Count (Interpretation)", function() {
   this.timeout(mochaTimeout);

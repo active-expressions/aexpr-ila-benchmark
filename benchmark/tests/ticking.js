@@ -8,7 +8,6 @@ import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRat
 
 import { aexprTicking, checkTicking, clearDefaultActiveExpressions } from 'active-expressions';
 
-/*
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
 
@@ -77,4 +76,4 @@ describe("Maintain Aspect Ratio", function() {
     }
   }));
 });
-*/
+
