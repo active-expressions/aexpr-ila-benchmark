@@ -9,7 +9,7 @@ import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRat
     numberOfAExprs,
     callbacksPerAExpr } from './params.js';
 
-import { aexprInterpretation } from 'active-expressions';
+import { aexprInterpretation } from 'aexpr-interpretation';
 
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
