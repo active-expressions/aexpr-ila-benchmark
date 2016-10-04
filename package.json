@@ -31,10 +31,10 @@
   },
   "homepage": "https://github.com/active-expressions/active-expressions-benchmark#readme",
   "dependencies": {
-    "active-expressions": "~1.5.1",
-    "aexpr-interpretation": "^1.0.0",
+    "active-expressions": "~2.0.1",
+    "aexpr-interpretation": "^1.0.1",
     "aexpr-source-transformation-propagation": "~1.4.2",
-    "aexpr-ticking": "^1.0.0",
+    "aexpr-ticking": "^1.0.1",
     "babel-cli": "^6.11.4",
     "babel-plugin-aexpr-source-transformation": "~2.2.0",
     "babel-plugin-locals": "~1.0.1",
