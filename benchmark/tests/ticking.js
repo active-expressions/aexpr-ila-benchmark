@@ -6,7 +6,7 @@ import { createRectangle } from './fixture.js';
 
 import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRatio } from './params.js';
 
-import { aexprTicking, checkTicking, clearDefaultActiveExpressions } from 'active-expressions';
+import { aexprTicking, checkTicking, clearDefaultActiveExpressions } from 'aexpr-ticking';
 
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);

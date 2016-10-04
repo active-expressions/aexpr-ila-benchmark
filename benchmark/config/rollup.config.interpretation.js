@@ -8,7 +8,7 @@ export default {
         nodeResolve({
             jsnext: true,
             main: true,
-            skip: [ 'active-expressions' ]
+            skip: [ 'aexpr-interpretation' ]
         }),
         commonjs()
     ]
