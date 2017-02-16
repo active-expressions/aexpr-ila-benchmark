@@ -13,7 +13,7 @@
     "compile-es5": "babel -d lib/ src/",
     "compile-browser": "browserify lib/contextjs.js --outfile lib/browser-contextjs.js --standalone cop",
     "prepublish": "npm run compile-es5 && npm run compile-browser",
-    "test": "npm run test-node && npm run test-karma",
+    "test": "npm run test-node",
     "test-karma": "karma start --single-run",
     "karma": "karma",
     "mocha": "mocha --compilers js:babel-core/register",
@@ -48,6 +48,7 @@
   },
   "homepage": "https://github.com/LivelyKernel/ContextJS#readme",
   "devDependencies": {
+    "aexpr-interpretation": "^1.1.1",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.7.7",
     "babel-plugin-array-includes": "^2.0.3",
@@ -69,5 +70,7 @@
     "mocha": "^2.4.5",
     "phantomjs-prebuilt": "^2.1.7"
   },
-  "dependencies": {}
+  "dependencies": {
+    "aexpr-trigger": "^1.1.0"
+  }
 }
