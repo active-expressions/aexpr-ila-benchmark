@@ -614,7 +614,10 @@ export class Layer {
   isGlobal () {
     return GlobalLayers.indexOf(this) !== -1;
   }
-  
+  isActive() {
+    return this.isGlobal();
+  }
+
   // Debugging
   toString () {
     return String(this.name); // could be a symbol
