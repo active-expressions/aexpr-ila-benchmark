@@ -25,6 +25,8 @@
  * Private Helpers for Development
  */
 
+import trigger from 'aexpr-trigger';
+
 export const Config = {};
 Config.ignoreDeprecatedProceed = true;
 
@@ -579,7 +581,15 @@ export class Layer {
     const partialLayer = ensurePartialLayer(this, object);
     partialLayer.reinstall();
   }
-  
+
+  // Implicit layer activation
+  activeWhile(aexpr) {
+    trigger(aexpr)
+      .onBecomeTrue(() => this.beGlobal())
+      .onBecomeFalse(() => this.beNotGlobal());
+    return this;
+  }
+
   // Layer activation
   beGlobal () {
     enableLayer(this);
