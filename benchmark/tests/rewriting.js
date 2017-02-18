@@ -46,7 +46,7 @@ describe('AExpr Construction', function() {
 
     let rect = createRectangle(20, 10);
 
-    it("Rewriting", perfTest({
+    perfTest(it, "Rewriting", {
       run() {
         for(let i = 0; i < numberOfAExprsToCreate; i++) {
           aexpr(() => rect.aspectRatio());
@@ -55,13 +55,13 @@ describe('AExpr Construction', function() {
       teardownRun() {
         reset();
       }
-    }));
+    });
   });
 
   describe("Different Object", function() {
     let rects;
 
-    it("Rewriting", perfTest({
+    perfTest(it, "Rewriting", {
       setupRun() {
         rects = [];
         times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
@@ -75,7 +75,7 @@ describe('AExpr Construction', function() {
       teardownRun() {
         reset();
       }
-    }));
+    });
   });
 });
 
@@ -86,7 +86,7 @@ describe("Maintain Aspect Ratio", function() {
     let randomWidths;
     let rect;
 
-  it("Rewriting", perfTest({
+    perfTest(it, "Rewriting", {
       setupRun() {
           rect = createRectangle(20, 10);
           aexpr(() => rect.aspectRatio())
@@ -105,7 +105,7 @@ describe("Maintain Aspect Ratio", function() {
     teardownRun() {
       reset();
     }
-  }));
+  });
 });
 
 // TODO: remove duplicate with baseline
@@ -115,7 +115,7 @@ describe("Rewriting Transformation Impact", function() {
   let quickSortRand = rand.create('quickSort'),
       items;
 
-  it("Rewriting", perfTest({
+  perfTest(it, "Rewriting", {
     setupRun() {
       items = [];
       for(let i = 0; i < rewritingImpactArraySize; i++) {
@@ -125,7 +125,7 @@ describe("Rewriting Transformation Impact", function() {
     run() {
       quickSort(items);
     }
-  }));
+  });
 });
 
 
@@ -136,7 +136,7 @@ describe("Partially Rewritten", function() {
     let calculations = [];
     let items;
 
-    it(`${i} of 10`, perfTest({
+    perfTest(it, `${i} of 10`, {
       setupRun() {
         let quickSortRand = rand.create('partiallyRewritten');
 
@@ -159,7 +159,7 @@ describe("Partially Rewritten", function() {
       run() {
         calculations.forEach(calc => calc(items));
       }
-    }));
+    });
   }
 });
 
@@ -169,7 +169,7 @@ describe("AExpr and Callback Count (Rewriting)", function() {
   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
     let items;
 
-    it(`${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, perfTest({
+    perfTest(it, `${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, {
       setupRun() {
         let arrayLength = 1000;
         items = getRandomArrayOfLength(arrayLength);
@@ -187,7 +187,7 @@ describe("AExpr and Callback Count (Rewriting)", function() {
       teardownRun() {
         reset();
       }
-    }));
+    });
   }
 
   numberOfAExprs.forEach(aexprs => {

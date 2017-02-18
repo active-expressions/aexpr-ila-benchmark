@@ -31,14 +31,14 @@ function performSingleRun(runner) {
   return duration;
 }
 
-export default function perfTest(runner) {
+export default function perfTest(it, name, runner) {
   if(runner instanceof Function) {
     runner = {
       run: runner
     };
   }
 
-  return function () {
+  it(name, function () {
     const maxRuns = 100,
         slidingWindowSize = 30,
         allowPercentagedDeviation = 4;
@@ -69,5 +69,5 @@ export default function perfTest(runner) {
     });
 
     return time;
-  };
+  });
 };

@@ -13,7 +13,7 @@ describe("Maintain Aspect Ratio", function() {
   let randomWidths;
   let rect;
 
-  it("Baseline", perfTest({
+  perfTest(it, "Baseline", {
     setupRun() {
       rect = createRectangle(20, 10);
       randomWidths = [];
@@ -28,7 +28,7 @@ describe("Maintain Aspect Ratio", function() {
         expect(rect.aspectRatio()).to.equal(targetAspectRatio);
       });
     }
-  }));
+  });
 });
 
 // TODO: remove duplicate with rewriting
@@ -38,7 +38,7 @@ describe("Rewriting Transformation Impact", function() {
   let quickSortRand = rand.create('quickSort'),
       items;
 
-  it("Baseline", perfTest({
+  perfTest(it, "Baseline", {
     setupRun() {
       items = [];
       for(let i = 0; i < rewritingImpactArraySize; i++) {
@@ -48,5 +48,5 @@ describe("Rewriting Transformation Impact", function() {
     run() {
       quickSort(items);
     }
-  }));
+  });
 });

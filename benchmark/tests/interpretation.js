@@ -18,20 +18,20 @@ describe('AExpr Construction', function() {
 
     let rect = createRectangle(20, 10);
 
-    it("Interpretation", perfTest({
+    perfTest(it, "Interpretation", {
       run() {
         for(let i = 0; i < numberOfAExprsToCreate; i++) {
           aexprInterpretation(() => rect.aspectRatio(), {rect});
         }
       }
-    }));
+    });
   });
 
   describe("Different Object", function() {
 
     let rects;
 
-    it("Interpretation", perfTest({
+    perfTest(it, "Interpretation", {
       setupRun() {
         rects = [];
         times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
@@ -42,7 +42,7 @@ describe('AExpr Construction', function() {
           aexprInterpretation(() => rect.aspectRatio(), {rect});
         }
       }
-    }));
+    });
   });
 });
 
@@ -53,7 +53,7 @@ describe("Maintain Aspect Ratio", function () {
     let randomWidths;
     let rect;
 
-  it("Interpretation", perfTest({
+  perfTest(it, "Interpretation", {
       setupRun() {
           rect = createRectangle(20, 10);
           aexprInterpretation(() => rect.aspectRatio(), {rect})
@@ -69,7 +69,7 @@ describe("Maintain Aspect Ratio", function () {
               expect(rect.aspectRatio()).to.equal(targetAspectRatio);
           });
       }
-  }));
+  });
 });
 
 describe("Partially Wrapped", function() {
@@ -78,7 +78,7 @@ describe("Partially Wrapped", function() {
   let rects;
 
   for(let i = 0; i <= 10; i++) {
-    it(`${i} of 10`, perfTest({
+    perfTest(it, `${i} of 10`, {
       setupRun() {
         rects = [];
         for(let j = 0; j < 10; j++) {
@@ -100,7 +100,7 @@ describe("Partially Wrapped", function() {
           }
         }
       }
-    }));
+    });
   }
 });
 
@@ -110,7 +110,7 @@ describe("AExpr and Callback Count (Interpretation)", function() {
   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
     let items;
 
-    it(`${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, perfTest({
+    perfTest(it, `${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, {
       setupRun() {
         let arrayLength = 1000;
         items = getRandomArrayOfLength(arrayLength);
@@ -125,7 +125,7 @@ describe("AExpr and Callback Count (Interpretation)", function() {
       run() {
         quickSort(items);
       }
-    }));
+    });
   }
 
   numberOfAExprs.forEach(aexprs => {

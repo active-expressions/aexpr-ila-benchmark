@@ -14,7 +14,7 @@ describe('AExpr Construction', function() {
   describe("Different Object", function() {
     let rects;
 
-    it("Ticking", perfTest({
+    perfTest(it, "Ticking", {
       setupRun() {
         rects = [];
         times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
@@ -29,14 +29,14 @@ describe('AExpr Construction', function() {
         clearDefaultActiveExpressions();
       }
       // TODO: teardown: remove/reset old aexprs!
-    }));
+    });
   });
 
   describe("Same Object", function() {
 
     let rect = createRectangle(20, 10);
 
-    it("Ticking", perfTest({
+    perfTest(it, "Ticking", {
       run() {
         for(let i = 0; i < numberOfAExprsToCreate; i++) {
           aexprTicking(() => rect.aspectRatio());
@@ -45,7 +45,7 @@ describe('AExpr Construction', function() {
       teardownRun() {
         clearDefaultActiveExpressions();
       }
-    }));
+    });
   });
 });
 
@@ -57,7 +57,7 @@ describe("Maintain Aspect Ratio", function() {
   let rect;
   let exp;
 
-  it("Ticking", perfTest({
+  perfTest(it, "Ticking", {
     setupRun() {
       rect = createRectangle(20, 10);
       exp = aexprTicking(() => rect.aspectRatio())
@@ -74,6 +74,6 @@ describe("Maintain Aspect Ratio", function() {
         expect(rect.aspectRatio()).to.equal(targetAspectRatio);
       });
     }
-  }));
+  });
 });
 
