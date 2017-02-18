@@ -2,6 +2,7 @@ var os = require('os');
 var path = require('path');
 var fs = require('fs');
 var builder = require('xmlbuilder');
+var _ = require('lodash');
 
 // TODO: extract reporter to its own file
 var JSONReporter = function(baseReporterDecorator, config, emitter, logger, helper, formatError) {
@@ -36,7 +37,8 @@ var JSONReporter = function(baseReporterDecorator, config, emitter, logger, help
   this.onBrowserStart = function(browser) {
     json[browser.id] = {
         browser: browser.name,
-        suites: []
+        suites: [],
+        partials: []
     };
   };
 
@@ -84,8 +86,12 @@ var JSONReporter = function(baseReporterDecorator, config, emitter, logger, help
     }
   };
 
+  // !!Test case returns!!
   this.specSuccess = this.specSkipped = this.specFailure = function(browser, result) {
     var browserSuites = json[browser.id].suites;
+      console.log('-------------- result.description --------------');
+      console.log(result.description);
+    return;
     browserSuites.push({
         suite: result.suite,
         status: result.skipped ? 'skip' : (result.success ? 'pass' : 'fail'),

@@ -1,3 +1,5 @@
+import { times } from './tests/test-utils.js';
+
 function standardDeviation(values){
   var avg = average(values);
 
@@ -38,23 +40,39 @@ export default function perfTest(it, name, runner) {
     };
   }
 
-  it(name, function () {
-    const maxRuns = 100,
-        slidingWindowSize = 30,
-        allowPercentagedDeviation = 4;
+  const maxRuns = 100,
+      slidingWindowSize = 30,
+      allowPercentagedDeviation = 4;
 
+    times(maxRuns, i => {
+        it(name, function () {
+            let duration = performSingleRun(runner);
+
+            this._runnable.title = JSON.stringify({
+                name: this._runnable.title,
+                duration,
+                index: i
+            });
+
+            return duration;
+        });
+    });
+
+  return;
+
+  it(name, function () {
     let results = [];
 
     for(var i = 0; i < maxRuns; i++) {
-      results.push(performSingleRun(runner));
+        results.push(performSingleRun(runner));
 
-      // if(results.length >= slidingWindowSize) {
-      //   let time = average(results.slice(-slidingWindowSize));
-      //   let percentagedStandardDeviation = 100 * standardDeviation(results.slice(-slidingWindowSize)) / time;
-      //   if(percentagedStandardDeviation <= allowPercentagedDeviation) {
-      //     break;
-      //   }
-      // }
+        // if(results.length >= slidingWindowSize) {
+        //   let time = average(results.slice(-slidingWindowSize));
+        //   let percentagedStandardDeviation = 100 * standardDeviation(results.slice(-slidingWindowSize)) / time;
+        //   if(percentagedStandardDeviation <= allowPercentagedDeviation) {
+        //     break;
+        //   }
+        // }
     }
 
     let lastMeasurements = results.slice(-slidingWindowSize),
