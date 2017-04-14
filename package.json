@@ -1,5 +1,5 @@
 {
-  "name": "active-expressions-benchmark",
+  "name": "aexpr-ila-benchmark",
   "version": "1.0.0",
   "description": "Benchmarking the 3 implementation strategies of active-expressions",
   "main": "index.js",

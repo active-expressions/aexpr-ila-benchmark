@@ -39,6 +39,8 @@ import plainCalc0 from './deps/toSkip0.js';
 
 import { reset } from 'aexpr-source-transformation-propagation';
 
+import { Layer } from '../../ila/layer.js';
+
 describe('AExpr Construction', function() {
   this.timeout(mochaTimeout);
 
@@ -163,36 +165,36 @@ describe("Partially Rewritten", function() {
   }
 });
 
-describe("AExpr and Callback Count (Rewriting)", function() {
-  this.timeout(mochaTimeout);
-
-  function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
-    let items;
-
-    perfTest(it, `${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, {
-      setupRun() {
-        let arrayLength = 1000;
-        items = getRandomArrayOfLength(arrayLength);
-
-        let indexGenerator = rand.create('aexprIndexGenerator');
-        times(numberOfAExprs, () => {
-          let aexprIndex = indexGenerator.range(arrayLength);
-          let listener = aexpr(() => items[aexprIndex]);
-          times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
-        });
-      },
-      run() {
-        quickSort(items);
-      },
-      teardownRun() {
-        reset();
-      }
-    });
-  }
-
-  numberOfAExprs.forEach(aexprs => {
-    callbacksPerAExpr.forEach(callbacks => {
-      makeTestCaseWith(aexprs, callbacks)
-    });
-  });
-});
+// describe("AExpr and Callback Count (Rewriting)", function() {
+//   this.timeout(mochaTimeout);
+//
+//   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
+//     let items;
+//
+//     perfTest(it, `${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, {
+//       setupRun() {
+//         let arrayLength = 1000;
+//         items = getRandomArrayOfLength(arrayLength);
+//
+//         let indexGenerator = rand.create('aexprIndexGenerator');
+//         times(numberOfAExprs, () => {
+//           let aexprIndex = indexGenerator.range(arrayLength);
+//           let listener = aexpr(() => items[aexprIndex]);
+//           times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
+//         });
+//       },
+//       run() {
+//         quickSort(items);
+//       },
+//       teardownRun() {
+//         reset();
+//       }
+//     });
+//   }
+//
+//   numberOfAExprs.forEach(aexprs => {
+//     callbacksPerAExpr.forEach(callbacks => {
+//       makeTestCaseWith(aexprs, callbacks)
+//     });
+//   });
+// });

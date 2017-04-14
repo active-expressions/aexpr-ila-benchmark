@@ -104,33 +104,33 @@ describe("Partially Wrapped", function() {
   }
 });
 
-describe("AExpr and Callback Count (Interpretation)", function() {
-  this.timeout(mochaTimeout);
-
-  function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
-    let items;
-
-    perfTest(it, `${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, {
-      setupRun() {
-        let arrayLength = 1000;
-        items = getRandomArrayOfLength(arrayLength);
-
-        let indexGenerator = rand.create('aexprIndexGenerator');
-        times(numberOfAExprs, () => {
-          let aexprIndex = indexGenerator.range(arrayLength);
-          let listener = aexprInterpretation(() => items[aexprIndex], locals);
-          times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
-        });
-      },
-      run() {
-        quickSort(items);
-      }
-    });
-  }
-
-  numberOfAExprs.forEach(aexprs => {
-    callbacksPerAExpr.forEach(callbacks => {
-      makeTestCaseWith(aexprs, callbacks)
-    });
-  });
-});
+// describe("AExpr and Callback Count (Interpretation)", function() {
+//   this.timeout(mochaTimeout);
+//
+//   function makeTestCaseWith(numberOfAExprs, numberOfCallbacksPerAExpr) {
+//     let items;
+//
+//     perfTest(it, `${numberOfAExprs} aexprs, ${numberOfCallbacksPerAExpr} cbs`, {
+//       setupRun() {
+//         let arrayLength = 1000;
+//         items = getRandomArrayOfLength(arrayLength);
+//
+//         let indexGenerator = rand.create('aexprIndexGenerator');
+//         times(numberOfAExprs, () => {
+//           let aexprIndex = indexGenerator.range(arrayLength);
+//           let listener = aexprInterpretation(() => items[aexprIndex], locals);
+//           times(numberOfCallbacksPerAExpr, () => listener.onChange(() => {}));
+//         });
+//       },
+//       run() {
+//         quickSort(items);
+//       }
+//     });
+//   }
+//
+//   numberOfAExprs.forEach(aexprs => {
+//     callbacksPerAExpr.forEach(callbacks => {
+//       makeTestCaseWith(aexprs, callbacks)
+//     });
+//   });
+// });
