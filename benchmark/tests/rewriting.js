@@ -39,7 +39,7 @@ import plainCalc0 from './deps/toSkip0.js';
 
 import { reset } from 'aexpr-source-transformation-propagation';
 
-import { Layer } from '../../ila/layer.js';
+import { Layer } from '../../ila/aexpr/src/Layers.js';
 
 // describe('AExpr Construction', function() {
 //   this.timeout(mochaTimeout);
@@ -208,11 +208,11 @@ describe("Layers Test ILA", function() {
         setupRun() {
             items = [];
             for(let i = 0; i < 1000; i++) {
-                items.push(new Layer(i));
+                items.push(new Layer());
             }
         },
         run() {
-            items.forEach(l => l.doIt(20))
+            items.forEach(l => l.beGlobal())
         },
         teardownRun() {
             reset();

@@ -51,7 +51,7 @@ import { mochaTimeout, aspectRatioCount, targetAspectRatio, rewritingImpactArray
 //   });
 // });
 
-import { Layer } from '../../ila/layer.js';
+import { Layer } from '../../ila/plain/src/Layers.js';
 
 describe("Layers Test ILA", function() {
     this.timeout(mochaTimeout);
@@ -63,11 +63,11 @@ describe("Layers Test ILA", function() {
         setupRun() {
             items = [];
             for(let i = 0; i < 1000; i++) {
-                items.push(new Layer(i));
+                items.push(new Layer());
             }
         },
         run() {
-            items.forEach(l => l.doIt(20))
+            items.forEach(l => l.beGlobal())
         },
         teardownRun() {
             //reset();

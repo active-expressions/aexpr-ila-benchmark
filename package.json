@@ -35,6 +35,7 @@
     "aexpr-interpretation": "^1.0.1",
     "aexpr-source-transformation-propagation": "~1.4.2",
     "aexpr-ticking": "^1.0.1",
+    "aexpr-trigger": "^1.1.0",
     "babel-cli": "^6.11.4",
     "babel-plugin-aexpr-source-transformation": "~2.2.0",
     "babel-plugin-locals": "~1.0.1",
