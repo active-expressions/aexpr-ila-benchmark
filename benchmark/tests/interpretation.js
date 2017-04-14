@@ -11,40 +11,40 @@ import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRat
 
 import { aexprInterpretation } from 'aexpr-interpretation';
 
-describe('AExpr Construction', function() {
-  this.timeout(mochaTimeout);
-
-  describe("Same Object", function() {
-
-    let rect = createRectangle(20, 10);
-
-    perfTest(it, "Interpretation", {
-      run() {
-        for(let i = 0; i < numberOfAExprsToCreate; i++) {
-          aexprInterpretation(() => rect.aspectRatio(), {rect});
-        }
-      }
-    });
-  });
-
-  describe("Different Object", function() {
-
-    let rects;
-
-    perfTest(it, "Interpretation", {
-      setupRun() {
-        rects = [];
-        times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
-      },
-      run() {
-        for(let i = 0; i < numberOfAExprsToCreate; i++) {
-          let rect = rects[i];
-          aexprInterpretation(() => rect.aspectRatio(), {rect});
-        }
-      }
-    });
-  });
-});
+// describe('AExpr Construction', function() {
+//   this.timeout(mochaTimeout);
+//
+//   describe("Same Object", function() {
+//
+//     let rect = createRectangle(20, 10);
+//
+//     perfTest(it, "Interpretation", {
+//       run() {
+//         for(let i = 0; i < numberOfAExprsToCreate; i++) {
+//           aexprInterpretation(() => rect.aspectRatio(), {rect});
+//         }
+//       }
+//     });
+//   });
+//
+//   describe("Different Object", function() {
+//
+//     let rects;
+//
+//     perfTest(it, "Interpretation", {
+//       setupRun() {
+//         rects = [];
+//         times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
+//       },
+//       run() {
+//         for(let i = 0; i < numberOfAExprsToCreate; i++) {
+//           let rect = rects[i];
+//           aexprInterpretation(() => rect.aspectRatio(), {rect});
+//         }
+//       }
+//     });
+//   });
+// });
 
 // describe("Maintain Aspect Ratio", function () {
 //   this.timeout(mochaTimeout);
