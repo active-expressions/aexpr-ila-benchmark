@@ -49,31 +49,31 @@ describe('AExpr Construction', function() {
   });
 });
 
-describe("Maintain Aspect Ratio", function() {
-  this.timeout(mochaTimeout);
-
-  let aspectRatioRand = rand.create('aspectRatio');
-  let randomWidths;
-  let rect;
-  let exp;
-
-  perfTest(it, "Ticking", {
-    setupRun() {
-      rect = createRectangle(20, 10);
-      exp = aexprTicking(() => rect.aspectRatio())
-          .onChange(ratio => rect.height = rect.width / targetAspectRatio);
-      randomWidths = [];
-      for(let i = 0; i < aspectRatioCount; i++) {
-        randomWidths.push(aspectRatioRand.random());
-      }
-    },
-    run() {
-      randomWidths.forEach(val => {
-        rect.width = val;
-        checkTicking([exp]);
-        expect(rect.aspectRatio()).to.equal(targetAspectRatio);
-      });
-    }
-  });
-});
+// describe("Maintain Aspect Ratio", function() {
+//   this.timeout(mochaTimeout);
+//
+//   let aspectRatioRand = rand.create('aspectRatio');
+//   let randomWidths;
+//   let rect;
+//   let exp;
+//
+//   perfTest(it, "Ticking", {
+//     setupRun() {
+//       rect = createRectangle(20, 10);
+//       exp = aexprTicking(() => rect.aspectRatio())
+//           .onChange(ratio => rect.height = rect.width / targetAspectRatio);
+//       randomWidths = [];
+//       for(let i = 0; i < aspectRatioCount; i++) {
+//         randomWidths.push(aspectRatioRand.random());
+//       }
+//     },
+//     run() {
+//       randomWidths.forEach(val => {
+//         rect.width = val;
+//         checkTicking([exp]);
+//         expect(rect.aspectRatio()).to.equal(targetAspectRatio);
+//       });
+//     }
+//   });
+// });
 
