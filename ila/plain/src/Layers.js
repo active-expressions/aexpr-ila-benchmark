@@ -40,7 +40,7 @@ export function log(string) {
 
 export const proceedStack = [];
 export const GlobalLayers = [];
-const implicitLayers = [];
+export const implicitLayers = [];
 function getActiveImplicitLayers() {
   return implicitLayers.filter(layer => layer.implicitlyActivated());
 }
