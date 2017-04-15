@@ -39,8 +39,6 @@ import plainCalc0 from './deps/toSkip0.js';
 
 import { reset } from 'aexpr-source-transformation-propagation';
 
-import { Layer } from '../../ila/aexpr/src/Layers.js';
-
 // describe('AExpr Construction', function() {
 //   this.timeout(mochaTimeout);
 //
@@ -199,23 +197,152 @@ import { Layer } from '../../ila/aexpr/src/Layers.js';
 //   });
 // });
 
-describe("Layers Test ILA", function() {
+import { Layer, resetLayerStack } from '../../ila/aexpr/src/Layers.js';
+import { Context, Adaptee } from './fixture.js';
+
+function resetLayers(layers) {
+    layers.forEach(layer => layer.uninstall());
+    layers.length = 0;
+    reset();
+    resetLayerStack();
+}
+
+describe("Overhead for Initial Association", function() {
     this.timeout(mochaTimeout);
 
-    let items;
+    let bool = false;
+    let layers = [];
 
-    perfTest(it, "AEXPR Impl", {
+    perfTest(it, "Reactive Implementation", {
         setupRun() {
-            items = [];
-            for(let i = 0; i < 1000; i++) {
-                items.push(new Layer());
+            layers.length = 0;
+            for(let i = 0; i < 100; i++) {
+                layers.push(new Layer());
             }
         },
         run() {
-            items.forEach(l => l.beGlobal())
+            layers.forEach(layer => {
+                layer.activeWhile(aexpr(() => bool))
+            });
         },
         teardownRun() {
-            reset();
+            resetLayers(layers);
+        }
+    });
+});
+
+describe("Frequent Context Change", function() {
+    this.timeout(mochaTimeout);
+
+    let context, adaptee, layer;
+    perfTest(it, "Reactive Implementation", {
+        setupRun() {
+            context = new Context();
+            adaptee = new Adaptee();
+            layer = new Layer()
+                .refineObject(adaptee, {
+                    call() {
+                        return 42;
+                    }
+                })
+                .activeWhile(aexpr(() => context.enabled()));
+        },
+        run() {
+            for(let i = 0; i < 10; i++) {
+                for(let j = 0; j < 500; j++) {
+                    context.disable();
+                    context.enable();
+                }
+                expect(adaptee.call()).to.equal(42);
+            }
+        },
+        teardownRun() {
+            resetLayers([layer]);
+        }
+    });
+});
+
+describe("Frequent Message Sends", function() {
+    this.timeout(mochaTimeout);
+
+    let context, adaptee, layer;
+
+    perfTest(it, "Reactive Implementation", {
+        setupRun() {
+            context = new Context();
+            adaptee = new Adaptee();
+            layer = new Layer()
+                .refineObject(adaptee, {
+                    call() {
+                        return 42;
+                    }
+                })
+                .activeWhile(aexpr(() => context.enabled()));
+        },
+        run() {
+            for(let i = 0; i < 5; i++) {
+                context.enable();
+                for(let j = 0; j < 1000; j++) {
+                    expect(adaptee.call()).to.equal(42);
+                }
+                context.disable();
+                for(let j = 0; j < 1000; j++) {
+                    expect(adaptee.call()).to.equal(-1);
+                }
+            }
+        },
+        teardownRun() {
+            resetLayers([layer]);
+        }
+    });
+});
+
+describe("Multiple Layers with Frequent Message Sends", function() {
+    this.timeout(mochaTimeout);
+
+    let contexts = [], adaptee;
+    let layers = [];
+
+    perfTest(it, "YReactive Implementation", {
+        setupRun() {
+            let numberOfLayers = 1000;
+
+            adaptee = new Adaptee();
+            layers.length = 0;
+            for(let i = 0; i < numberOfLayers; i++) {
+                (index => {
+                    let context = new Context();
+                    let layer = new Layer()
+                        .refineObject(adaptee, {
+                            call() {
+                                return index;
+                            }
+                        })
+                        .activeWhile(aexpr(() => context.enabled()));
+
+                    contexts.push(context);
+                    layers.push(layer);
+                })(i);
+            }
+        },
+        run() {
+            for(let i = 0; i < 1; i++) {
+                contexts.forEach((context, index) => {
+                    context.enable();
+                    for(let j = 0; j < 10; j++) {
+                        expect(adaptee.call()).not.to.equal(-100);
+                    }
+                });
+                contexts.reverse().forEach((context, index) => {
+                    context.disable();
+                    for(let j = 0; j < 10; j++) {
+                        expect(adaptee.call()).not.to.equal(-100);
+                    }
+                });
+            }
+        },
+        teardownRun() {
+            resetLayers(layers);
         }
     });
 });

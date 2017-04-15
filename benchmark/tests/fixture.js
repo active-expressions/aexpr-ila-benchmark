@@ -12,3 +12,24 @@ export function createRectangle(x = 10, y = 20) {
     }
     ;
 }
+
+export class Context {
+    constructor() {
+        this.disable();
+    }
+    enable() {
+        this.state = true;
+    }
+    disable() {
+        this.state = false;
+    }
+    enabled() {
+        return this.state;
+    }
+}
+
+export class Adaptee {
+    call() {
+        return -1;
+    }
+}
