@@ -8,46 +8,46 @@ import { numberOfAExprsToCreate, mochaTimeout, aspectRatioCount, targetAspectRat
 
 import { aexprTicking, checkTicking, clearDefaultActiveExpressions } from 'aexpr-ticking';
 
-describe('AExpr Construction', function() {
-  this.timeout(mochaTimeout);
-
-  describe("Different Object", function() {
-    let rects;
-
-    perfTest(it, "Ticking", {
-      setupRun() {
-        rects = [];
-        times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
-      },
-      run() {
-        for(let i = 0; i < numberOfAExprsToCreate; i++) {
-          let rect = rects[i];
-          aexprTicking(() => rect.aspectRatio());
-        }
-      },
-      teardownRun() {
-        clearDefaultActiveExpressions();
-      }
-      // TODO: teardown: remove/reset old aexprs!
-    });
-  });
-
-  describe("Same Object", function() {
-
-    let rect = createRectangle(20, 10);
-
-    perfTest(it, "Ticking", {
-      run() {
-        for(let i = 0; i < numberOfAExprsToCreate; i++) {
-          aexprTicking(() => rect.aspectRatio());
-        }
-      },
-      teardownRun() {
-        clearDefaultActiveExpressions();
-      }
-    });
-  });
-});
+// describe('AExpr Construction', function() {
+//   this.timeout(mochaTimeout);
+//
+//   describe("Different Object", function() {
+//     let rects;
+//
+//     perfTest(it, "Ticking", {
+//       setupRun() {
+//         rects = [];
+//         times(numberOfAExprsToCreate, () => rects.push(createRectangle(20, 10)));
+//       },
+//       run() {
+//         for(let i = 0; i < numberOfAExprsToCreate; i++) {
+//           let rect = rects[i];
+//           aexprTicking(() => rect.aspectRatio());
+//         }
+//       },
+//       teardownRun() {
+//         clearDefaultActiveExpressions();
+//       }
+//       // TODO: teardown: remove/reset old aexprs!
+//     });
+//   });
+//
+//   describe("Same Object", function() {
+//
+//     let rect = createRectangle(20, 10);
+//
+//     perfTest(it, "Ticking", {
+//       run() {
+//         for(let i = 0; i < numberOfAExprsToCreate; i++) {
+//           aexprTicking(() => rect.aspectRatio());
+//         }
+//       },
+//       teardownRun() {
+//         clearDefaultActiveExpressions();
+//       }
+//     });
+//   });
+// });
 
 // describe("Maintain Aspect Ratio", function() {
 //   this.timeout(mochaTimeout);
