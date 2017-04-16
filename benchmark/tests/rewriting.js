@@ -213,10 +213,10 @@ describe("Overhead for Initial Association", function() {
     let bool = false;
     let layers = [];
 
-    perfTest(it, "Reactive Implementation", {
+    perfTest(it, "Active Expressions (Compilation)", {
         setupRun() {
             layers.length = 0;
-            for(let i = 0; i < 100; i++) {
+            for(let i = 0; i < 10000; i++) {
                 layers.push(new Layer());
             }
         },
@@ -235,7 +235,7 @@ describe("Frequent Context Change", function() {
     this.timeout(mochaTimeout);
 
     let context, adaptee, layer;
-    perfTest(it, "Reactive Implementation", {
+    perfTest(it, "Active Expressions (Compilation)", {
         setupRun() {
             context = new Context();
             adaptee = new Adaptee();
@@ -248,7 +248,7 @@ describe("Frequent Context Change", function() {
                 .activeWhile(aexpr(() => context.enabled()));
         },
         run() {
-            for(let i = 0; i < 10; i++) {
+            for(let i = 0; i < 100; i++) {
                 for(let j = 0; j < 500; j++) {
                     context.disable();
                     context.enable();
@@ -267,7 +267,7 @@ describe("Frequent Message Sends", function() {
 
     let context, adaptee, layer;
 
-    perfTest(it, "Reactive Implementation", {
+    perfTest(it, "Active Expressions (Compilation)", {
         setupRun() {
             context = new Context();
             adaptee = new Adaptee();
@@ -303,7 +303,7 @@ describe("Multiple Layers with Frequent Message Sends", function() {
     let contexts = [], adaptee;
     let layers = [];
 
-    perfTest(it, "YReactive Implementation", {
+    perfTest(it, "Active Expressions (Compilation)", {
         setupRun() {
             let numberOfLayers = 1000;
 
@@ -324,21 +324,15 @@ describe("Multiple Layers with Frequent Message Sends", function() {
                     layers.push(layer);
                 })(i);
             }
+            contexts.forEach((context, index) => {
+                context.enable();
+            });
         },
         run() {
-            for(let i = 0; i < 1; i++) {
-                contexts.forEach((context, index) => {
-                    context.enable();
-                    for(let j = 0; j < 10; j++) {
-                        expect(adaptee.call()).not.to.equal(-100);
-                    }
-                });
-                contexts.reverse().forEach((context, index) => {
-                    context.disable();
-                    for(let j = 0; j < 10; j++) {
-                        expect(adaptee.call()).not.to.equal(-100);
-                    }
-                });
+            for(let i = 0; i < 100; i++) {
+                for(let j = 0; j < 10; j++) {
+                    expect(adaptee.call()).not.to.equal(-100);
+                }
             }
         },
         teardownRun() {
